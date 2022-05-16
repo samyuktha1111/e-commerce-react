@@ -1,25 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
-
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Tailwind from './components/products/Tailwind';
+import Order from './components/products/Order';
+import Home from './components/products/Home';
+import Cart from './components/products/Cart';
+import store from './components/store';
+import {Provider} from 'react-redux'
+import {useState} from 'react'
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const[item,setItem]=useState('')
+	const category=item1=>
+	{
+		setItem(item1)
+	}
+	return (
+		<Provider store={store}>
+			<div className="App">
+				<Router>
+					<Routes>
+						<Route exact path="/" element={<Home category={category} />} />
+						<Route exact path="/tailwind" element={<Tailwind item={item} />} />
+						<Route exact path="/order" element={<Order />} />
+						<Route exact path="/cart" element={<Cart />} />
+					</Routes>
+				</Router>
+			</div>
+		</Provider>
+	);
 }
 
 export default App;
