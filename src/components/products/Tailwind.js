@@ -1,45 +1,68 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-
+import ProductDetail from './ProductDetail'
 import { useDispatch, useSelector } from 'react-redux';
-import { ADD_CART, GET_PRODUCTS } from '../Types';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { CART_TOTAL, GET_PRODUCTS } from '../Types';
+import Dialog from '@material-ui/core/Dialog';
 
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import Button from '@material-ui/core/Button';
 import Ratings from './Ratings';
-import Alert from './Alert';
+
 
 const Tailwind = ({ item }) => {
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state?.products);
+	
+	const cartTotal=useSelector((state)=>state?.carttotal)
+     const[dis,setDis]=useState(false)
+	
+const [open, setOpen] = useState(false);
 
-	const [display, setDisplay] = useState(false);
 
 	const navigate = useNavigate();
-	const orderHandler = (item) => {
-		console.log(item);
-		dispatch({ type: ADD_CART, payload: item });
-		setDisplay(true);
-	};
+	
+	const viewHandler=(item)=>
+	{
+        localStorage.setItem('item', JSON.stringify(item));
+		setDis(true)
+		setOpen(true);
+	}
 	const addToCartHandler = () => {
 		navigate('/cart');
+	};
+	const handleToClose = () => {
+		setOpen(false);
 	};
 	useEffect(() => {
 		dispatch({ type: GET_PRODUCTS });
 	}, []);
+	useEffect(()=>
+	{
+		dispatch({type:CART_TOTAL})
+	})
 	console.log('pppppp', item);
 	return (
 		<>
-			{display && <Alert />}
-			<h1 className="mt-10 mb-2 text-center capitalize text-4xl text-yellow-500 md:text-green-500 lg:text-pink-500 sm:text-blue-500 ">
-				Our products
-			</h1>
-
-			<button
-				className="justify-items-end bg-pink-400 text-white mt-6  px-4 py-2"
-				onClick={addToCartHandler}
-			>
-				Go to cart
-			</button>
+			<div className="bg-sky-500 w-screen grid grid-cols-6 gap-4">
+				<div className="col-start-2 col-span-4 ">
+					<h1 className=" text-center capitalize text-4xl text-white py-6">
+						Our products
+					</h1>
+				</div>
+				<div>
+					<ShoppingCartIcon
+						onClick={addToCartHandler}
+						className="w-max  col-start-5 col-end-6 mt-8"
+					/>
+					<span className="rounded-full py-1 px-2 bg-red-400">
+						{cartTotal}
+					</span>
+				</div>
+			</div>
 
 			<div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-3 justify-items-center mt-20">
 				{products &&
@@ -73,17 +96,30 @@ const Tailwind = ({ item }) => {
 												Hurry
 											</span>
 										</div>
+
 										<button
-											onClick={() => orderHandler(product)}
-											class="bg-cyan-500 hover:bg-cyan-700 text-white text-sm font-bold py-2 px-4  mt-2 mb-5 rounded hover:scale-125 transition ease-in-out duration-1000"
+											onClick={() => viewHandler(product)}
+											className="bg-cyan-500 hover:bg-cyan-700 text-white text-sm font-bold py-2 px-4  mt-2 mb-5 rounded hover:scale-125 transition ease-in-out duration-1000"
 										>
-											Add to cart
+											view
 										</button>
 									</div>
 								</div>
 							)
 					)}
 			</div>
+			{dis && (
+				<Dialog open={open}>
+					<DialogContent></DialogContent>
+
+					<ProductDetail setOpen={setOpen} />
+					<DialogActions>
+						<Button onClick={handleToClose} color="danger" autoFocus>
+							Close
+						</Button>
+					</DialogActions>
+				</Dialog>
+			)}
 		</>
 	);
 };

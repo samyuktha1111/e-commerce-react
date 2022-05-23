@@ -1,79 +1,82 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import Ratings from './Ratings';
+import React, { useEffect } from 'react';
+
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { DELETE_CART } from '../Types';
+import {  SUBTOTAL, EMPTY_CART } from '../Types';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
+import CartDetails from './CartDetails';
+
 
 const mapStateToProps = (state) => {
 	console.log('state1', state);
 	return {
 		items: state.items,
+		subtotal:state.subtotal,
+		cartTotal:state.carttotal
 	};
 };
 const Cart = (props) => {
-	const navigate = useNavigate();
-	const dispatch = useDispatch();
-	const orderHandler = () => {
-		navigate('/order');
-	};
 
-	const removeHandler = (id) => {
-		dispatch({ type: DELETE_CART, payload: { id } });
-	};
+	const dispatch = useDispatch();
+	
+
 	console.log('items', props.items);
+	useEffect(()=>
+	{
+		dispatch({type:SUBTOTAL})
+	})
+	const cartHandler=()=>
+	{
+		dispatch({type:EMPTY_CART})
+	}
+
 	return (
 		<>
-			<h1 className="mt-10 mb-2 text-center capitalize text-4xl text-yellow-500 md:text-green-500 lg:text-pink-500 sm:text-blue-500">
-				Cart
-			</h1>
-
-			<div className=" grid grid-cols-1 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-3 justify-items-center mt-20">
-				{props.items.length > 0 ? (
-					props.items.map((item) => (
-						<div className="py-10">
-							<div className="rounded overflow-hidden shadow-lg max-w-xs  border-neutral-400 border-2">
-								<img
-									src={item.image}
-									alt="cream"
-									className="max-w-xs pl-11 pt-5 transform transition ease-in-out duration-1000 hover:scale-125 h-64"
-								/>
-								<div className="px-6 py-4">
-									<Ratings />
-									<div className="font-bold text-xl mt-4 mb-2 line-clamp-1">
-										{item.title}
-									</div>
-									<p className="text-gray-400 text-md mb-2 line-clamp-3">
-										{item.description}
-									</p>
-								</div>
-								<div className="grid grid-flow-col gap-5 pb-2 px-20">
-									<span className="bg-gray-200 rounded-full px-3 py-1 text-sm font-base mb-2">
-										Rs {item.price}
-									</span>
-								</div>
-								<div className="grid grid-flow-col gap-2">
-									<button
-										onClick={orderHandler}
-										className="bg-pink-500 hover:bg-pink-700 text-white text-sm font-bold py-2 px-4  mt-2 mb-5 rounded hover:scale-125 transition ease-in-out duration-1000"
-									>
-										Place order
-									</button>
-									<button
-										className="bg-pink-500 hover:bg-pink-700 text-white text-sm font-bold py-2 px-4  mt-2 mb-5 rounded hover:scale-125 transition ease-in-out duration-1000"
-										onClick={() => removeHandler(item.id)}
-									>
-										Remove
-									</button>
-								</div>
-							</div>
-						</div>
-					))
-				) : (
-					<h1 className="ml-96 w-max text-4xl animate-ping text-yellow-500 lg:text-blue-500 md:text-green-500 sm:text-blue-500">
-						CART IS EMPTY
+			{props.items.length>0 && <>
+				<div className="bg-sky-500 w-screen grid grid-cols-6 gap-4">
+				<div className="col-start-2 col-span-4 ">
+					<h1 className=" text-center capitalize text-4xl text-white py-6">
+						CART
 					</h1>
-				)}
+				</div>
+				<div>
+					<ShoppingCartIcon className="w-max  col-start-5 col-end-6 mt-8" />
+					<span className="rounded-full py-1 px-2 bg-red-400">
+						{props.cartTotal}
+					</span>
+				</div>
+			</div>
+			<div className="grid grid-cols-7 gap-2 mt-11">
+				<div className="col-start-5 text-sm ">PRICE</div>
+				<div className="col-start-6 text-sm ">QUANTITY</div>
+				<div className="col-start-7 text-sm ">SUBTOTAL</div>
+			</div>
+			<hr />
+			</>}
+			<div className=" grid grid-flow-row gap-2 max-w-sm h-1 ">
+			<CartDetails/>
+			{ props.items.length>0 &&	<>
+				<div className="grid grid-rows-2 gap-3 mt-6">
+					<div className="grid grid-cols-8">
+						<div className="text-xl col-start-7 col-span-2">
+							Cart Total: {props.subtotal}
+						</div>
+					</div>
+					<div className="grid grid-cols-8 gap-2">
+						<div className=" col-start-7">
+							<button onClick={cartHandler} className="bg-red-600 hover:bg-cyan-700 text-white text-sm font-bold px-6 py-2  mt-2 mb-5 rounded hover:scale-125 transition ease-in-out duration-1000 col-start-6">
+								EMPTY CART
+							</button>
+						</div>
+						<div className="col-start-8">
+							<button className="bg-black hover:bg-cyan-700 text-white text-sm font-bold px-6 py-2 mt-2 mb-5 rounded hover:scale-125 transition ease-in-out duration-1000 col-start-7">
+								CHECKOUT
+							</button>
+						</div>
+					</div>
+				</div>
+				</>}
 			</div>
 		</>
 	);
