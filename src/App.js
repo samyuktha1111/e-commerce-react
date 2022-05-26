@@ -4,9 +4,13 @@ import Tailwind from './components/products/Tailwind';
 import Order from './components/products/Order';
 import Home from './components/products/Home';
 import Cart from './components/products/Cart';
+import PriceDetails from './components/payment/PriceDetails';
 import store from './components/store';
 import {Provider} from 'react-redux'
 import {useState} from 'react'
+import CardPayment from './components/payment/CardPayment';
+import LoginForm from './components/login/LoginForm'
+import Users from './components/login/Users';
 function App() {
 	const[item,setItem]=useState('')
 	const category=item1=>
@@ -22,6 +26,10 @@ function App() {
 						<Route exact path="/tailwind" element={<Tailwind item={item} />} />
 						<Route exact path="/order" element={<Order />} />
 						<Route exact path="/cart" element={<Cart />} />
+						<Route exact path="/price" element={<PriceDetails />} />
+						<Route exact path="/pay" element={<CardPayment />} />
+						<Route exact path="/login" element={<LoginForm />} />
+						<Route exact path="/user" element={<Users />} />
 					</Routes>
 				</Router>
 			</div>

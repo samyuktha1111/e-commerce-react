@@ -1,5 +1,5 @@
 import { all, call, put, takeEvery, takeLatest } from 'redux-saga/effects';
-import { ADD_CART, CART_TOTAL, DECREMENT, EMPTY_CART,DELETE_CART, GET_PRODUCTS, INCREMENT, SUBTOTAL } from './Types';
+import { ADD_CART, CART_TOTAL, DECREMENT, EMPTY_CART,DELETE_CART, GET_PRODUCTS, INCREMENT, SUBTOTAL, LOGIN, ADD_USER } from './Types';
 import axios from 'axios';
 export function* AddCartUser(action) {
 	yield put({ type: 'ADD_CART_SUCCESS', id: action.payload });
@@ -37,6 +37,11 @@ export function* emptycart()
 {
 	yield put({type:'EMPTY_CART_SUCCESS'})
 }
+export function* loginsuccess(action)
+{
+	yield put({type:'LOGIN_SUCCESS',payload:action.payload.formValues})
+}
+
 export function* watchUser() {
 	yield all(
 		yield takeLatest(GET_PRODUCTS, getProductsSuccess),
@@ -46,6 +51,8 @@ export function* watchUser() {
 		yield takeEvery(DECREMENT,decQuantity),
 		yield takeEvery(SUBTOTAL,total),
 		yield takeEvery(CART_TOTAL,cartTotal),
-		yield takeEvery(EMPTY_CART,emptycart)
+		yield takeEvery(EMPTY_CART,emptycart),
+		yield takeEvery(LOGIN,loginsuccess),
+	
 	);
 }

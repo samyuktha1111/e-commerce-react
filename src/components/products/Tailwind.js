@@ -27,7 +27,7 @@ const [open, setOpen] = useState(false);
 	
 	const viewHandler=(item)=>
 	{
-        localStorage.setItem('item', JSON.stringify(item));
+        localStorage.setItem('item', JSON.stringify({...item,discount:50}));
 		setDis(true)
 		setOpen(true);
 	}
@@ -47,9 +47,9 @@ const [open, setOpen] = useState(false);
 	console.log('pppppp', item);
 	return (
 		<>
-			<div className="bg-sky-500 w-screen grid grid-cols-6 gap-4">
+			<div className="bg-gray-200 w-screen grid grid-cols-6 gap-4">
 				<div className="col-start-2 col-span-4 ">
-					<h1 className=" text-center capitalize text-4xl text-white py-6">
+					<h1 className=" text-center capitalize text-4xl text-black py-6">
 						Our products
 					</h1>
 				</div>
@@ -58,9 +58,7 @@ const [open, setOpen] = useState(false);
 						onClick={addToCartHandler}
 						className="w-max  col-start-5 col-end-6 mt-8"
 					/>
-					<span className="rounded-full py-1 px-2 bg-red-400">
-						{cartTotal}
-					</span>
+					<span className="rounded-full py-1 px-2 bg-red-400">{cartTotal}</span>
 				</div>
 			</div>
 
@@ -110,9 +108,9 @@ const [open, setOpen] = useState(false);
 			</div>
 			{dis && (
 				<Dialog open={open}>
-					<DialogContent></DialogContent>
-
-					<ProductDetail setOpen={setOpen} />
+					<DialogContent>
+						<ProductDetail setOpen={setOpen} />
+					</DialogContent>
 					<DialogActions>
 						<Button onClick={handleToClose} color="danger" autoFocus>
 							Close

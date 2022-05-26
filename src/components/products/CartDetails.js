@@ -24,7 +24,7 @@ function CartDetails() {
 			dispatch({ type: DELETE_CART, payload: { id } });
 		};
   return (
-		<div>
+		<div  >
 			{items.length > 0 ? (
 				items.map((item) => (
 					<div className="py-10 ">
@@ -59,19 +59,19 @@ function CartDetails() {
 								</div>
 							</div>
 
-							<div className="grid grid-cols-3 gap-3 mt-6  ">
+							<div className="grid grid-flow-col  h-7 w-28 mt-6 ml-12 ">
 								<RemoveSharpIcon
 									onClick={() => minusHandler(item.id)}
-									className=" border border-black text-white bg-blue-500 "
+									className=" border border-black  text-white bg-blue-500 "
 								/>
 								<input
 									type="text"
 									value={item.qty}
-									className="w-10 h-4 border border-black  mb-1 py-3 text-center"
+									className="w-10 h-4  mb-1 py-3 text-center "
 								/>
 								<AddSharpIcon
 									onClick={() => plusHandler(item.id)}
-									className=" border border-black text-white bg-blue-500 "
+									className=" border border-black text-white  bg-blue-500 "
 								/>
 							</div>
 							<div className="mt-6 px-11">

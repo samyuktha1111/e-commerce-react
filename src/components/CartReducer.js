@@ -2,7 +2,8 @@ const initialState = {
 	items: [],
 	products: [],
 	subtotal:0,
-	carttotal:0
+	carttotal:0,
+	users:[]
 };
 export const CartReducer = (state = initialState, action) => {
 	// eslint-disable-next-line default-case
@@ -78,6 +79,24 @@ case 'CART_TOTAL_SUCCESS':
 	return {...state,carttotal}
 	case 'EMPTY_CART_SUCCESS':
 		return{...state,items:[]}
+	case 'LOGIN_SUCCESS':
+         let already1=false
+			 state.items.forEach((x) => {
+					if (
+						x.email === action.payload.email ||
+						x.phonenumber === action.payload.phonenumber
+					) {
+						already1 = true;
+						
+					}
+				});
+				if(already1===false )
+				{
+                     state.users.push(action.payload)
+				}
+		
+			return state;
+			
 		default:
 			return state;
 	}
