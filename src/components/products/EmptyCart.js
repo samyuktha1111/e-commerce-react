@@ -1,12 +1,11 @@
-import React from 'react'
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-const EmptyCart=()=> {
-	const navigate=useNavigate();
-	const shopHandler=()=>
-	{
-		navigate('/')
-	}
-  return (
+const EmptyCart = () => {
+	const navigate = useNavigate();
+	const shopHandler = () => {
+		navigate('/');
+	};
+	return (
 		<>
 			<div className="mt-32  w-screen grid grid-cols-8">
 				<img
@@ -21,13 +20,16 @@ const EmptyCart=()=> {
 					Add items to it now
 				</div>
 				<div className="col-start-4 col-span-2 mt-14 mr-11">
-					<button onClick={shopHandler} className=" bg-blue-500 hover:bg-blue-700 px-11 py-2 text-white hover:scale-125 transition ease-in-out duration-1000">
+					<button
+						onClick={shopHandler}
+						className=" bg-blue-500 hover:bg-blue-700 px-11 py-2 text-white hover:scale-125 transition ease-in-out duration-1000"
+					>
 						Shop now
 					</button>
 				</div>
 			</div>
 		</>
 	);
-}
+};
 
-export default EmptyCart
+export default EmptyCart;

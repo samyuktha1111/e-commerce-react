@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import ProductDetail from './ProductDetail'
+import ProductDetail from './ProductDetail';
 import { useDispatch, useSelector } from 'react-redux';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { CART_TOTAL, GET_PRODUCTS } from '../Types';
@@ -12,25 +12,22 @@ import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
 import Ratings from './Ratings';
 
-
-const Tailwind = ({ item }) => {
+const Products = ({ item }) => {
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state?.products);
-	
-	const cartTotal=useSelector((state)=>state?.carttotal)
-     const[dis,setDis]=useState(false)
-	
-const [open, setOpen] = useState(false);
 
+	const cartTotal = useSelector((state) => state?.carttotal);
+	const [dis, setDis] = useState(false);
+
+	const [open, setOpen] = useState(false);
 
 	const navigate = useNavigate();
-	
-	const viewHandler=(item)=>
-	{
-        localStorage.setItem('item', JSON.stringify({...item,discount:50}));
-		setDis(true)
+
+	const viewHandler = (item) => {
+		localStorage.setItem('item', JSON.stringify({ ...item, discount: 100 }));
+		setDis(true);
 		setOpen(true);
-	}
+	};
 	const addToCartHandler = () => {
 		navigate('/cart');
 	};
@@ -40,10 +37,9 @@ const [open, setOpen] = useState(false);
 	useEffect(() => {
 		dispatch({ type: GET_PRODUCTS });
 	}, []);
-	useEffect(()=>
-	{
-		dispatch({type:CART_TOTAL})
-	})
+	useEffect(() => {
+		dispatch({ type: CART_TOTAL });
+	});
 	console.log('pppppp', item);
 	return (
 		<>
@@ -122,4 +118,4 @@ const [open, setOpen] = useState(false);
 	);
 };
 
-export default Tailwind;
+export default Products;

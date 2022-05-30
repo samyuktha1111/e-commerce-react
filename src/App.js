@@ -1,16 +1,18 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Tailwind from './components/products/Tailwind';
+import Products from './components/products/Products';
 import Order from './components/products/Order';
-import Home from './components/products/Home';
+import Home from './components/main/Home';
 import Cart from './components/products/Cart';
 import PriceDetails from './components/payment/PriceDetails';
 import store from './components/store';
 import {Provider} from 'react-redux'
 import {useState} from 'react'
 import CardPayment from './components/payment/CardPayment';
-import LoginForm from './components/login/LoginForm'
-import Users from './components/login/Users';
+
+import Signup from './components/login/Signup';
+import Login from './components/login/Login';
+import Mainpage from './components/main/Mainpage';
 function App() {
 	const[item,setItem]=useState('')
 	const category=item1=>
@@ -22,14 +24,15 @@ function App() {
 			<div className="App">
 				<Router>
 					<Routes>
-						<Route exact path="/" element={<Home category={category} />} />
-						<Route exact path="/tailwind" element={<Tailwind item={item} />} />
+						<Route exact path="/home" element={<Home category={category} />} />
+						<Route exact path="/product" element={<Products item={item} />} />
 						<Route exact path="/order" element={<Order />} />
 						<Route exact path="/cart" element={<Cart />} />
 						<Route exact path="/price" element={<PriceDetails />} />
 						<Route exact path="/pay" element={<CardPayment />} />
-						<Route exact path="/login" element={<LoginForm />} />
-						<Route exact path="/user" element={<Users />} />
+						<Route exact path="/login" element={<Signup />} />
+						<Route exact path="/user" element={<Login />} />
+						<Route exact path="/" element={<Mainpage />} />
 					</Routes>
 				</Router>
 			</div>

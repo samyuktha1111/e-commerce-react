@@ -6,10 +6,10 @@ function Home(props) {
 
 	const shopHandler = (item) => {
 		props.category(item);
-		navigate('/tailwind');
+		navigate('/product');
 	};
 	return (
-		<div className=" grid grid-flow-row gap-7 pt-36 ">
+		<div className=" grid grid-flow-row gap-7 pt-36 lg:w-fit sm:w-fit mx-auto">
 			<h1 className="text-4xl  font-bold text-yellow-500 md:text-green-500 lg:text-pink-500 sm:text-blue-500">
 				OUR BRANDS
 			</h1>
@@ -18,7 +18,7 @@ function Home(props) {
 				like fresh fruits, fresh vegetables, groceries, home care and packaged
 				food among others.
 			</p>
-			<div className="grid grid-flow-col ml-24 pt-20">
+			<div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 ml-52 pt-20">
 				<button
 					onClick={() => shopHandler("men's clothing")}
 					className="animate-bounce bg-green-500 sm:bg-yellow-500 md:bg-blue-500 lg:bg-pink-500 hover:bg-pink-700 text-white text-md font-bold py-4 px-6 mt-5 w-48 rounded-full hover:scale-125 transition ease-in-out duration-1000"

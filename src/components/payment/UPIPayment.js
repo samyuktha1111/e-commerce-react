@@ -1,19 +1,17 @@
-import React from 'react'
-import {useSelector} from 'react-redux'
-import {useNavigate} from 'react-router-dom'
-function UPIPayment({setOpen}) {
-	const navigate=useNavigate()
-    console.log('upi')
-    const subtotal=useSelector((state)=>state.subtotal)
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+function UPIPayment({ setOpen }) {
+	const navigate = useNavigate();
+	console.log('upi');
+	const subtotal = useSelector((state) => state.subtotal);
 	const handleClose = () => {
 		setOpen(false);
-		
 	};
-	const proceed=()=>
-	{
-navigate('/order')
-	}
-  return (
+	const proceed = () => {
+		navigate('/order');
+	};
+	return (
 		<div className="w-fit mx-32 h-screen text-center">
 			<div className="font-semisolid text-2xl  text-left ml-6">
 				Scan This QR Code
@@ -35,12 +33,17 @@ navigate('/order')
 				,enter the UPI address.We will manually verify the payment against your
 				UPI ID.
 			</p>
-			<div className='grid grid-flow-col gap-2'>
-				<button onClick={proceed} className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-8  mt-6 rounded hover:scale-125 transition ease-in-out duration-1000">
+			<div className="grid grid-flow-col gap-2">
+				<button
+					onClick={proceed}
+					className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-8  mt-6 rounded hover:scale-125 transition ease-in-out duration-1000"
+				>
 					Proceed to pay
 				</button>
-				<button onClick={handleClose}
-				className="bg-gray-200 hover:bg-gray-400 text-black text-sm font-bold  px-2 mt-6  rounded hover:scale-125 transition ease-in-out duration-1000">
+				<button
+					onClick={handleClose}
+					className="bg-gray-200 hover:bg-gray-400 text-black text-sm font-bold  px-2 mt-6  rounded hover:scale-125 transition ease-in-out duration-1000"
+				>
 					Close
 				</button>
 			</div>
@@ -48,4 +51,4 @@ navigate('/order')
 	);
 }
 
-export default UPIPayment
+export default UPIPayment;

@@ -1,17 +1,18 @@
-import React from 'react'
-import {useSelector} from 'react-redux'
-import PaymentOptions from './PaymentOptions'
+import React from 'react';
+import { useSelector } from 'react-redux';
+import PaymentOptions from './PaymentOptions';
 
-const PriceDetails=()=> {
-    const items=useSelector((state)=>state.items)
-   const subtotal = useSelector((state) => state.subtotal);
-   const carttotal = useSelector((state) => state.carttotal);
-   let amt=Number(subtotal)+Number(50)
-  return (
+const PriceDetails = () => {
+	const items = useSelector((state) => state.items);
+	const subtotal = useSelector((state) => state.subtotal);
+	const carttotal = useSelector((state) => state.carttotal);
+	const discountTotal = useSelector((state) => state.discountTotal);
+	let amt = Number(subtotal) - Number(discountTotal)+Number(50);
+	return (
 		<>
-			<div className="bg-gray-200 w-screen h-11"></div>
-			<div className=" w-screen h-screen grid grid-cols-2 divide-x-2">
-				<div className="w-full  h-screen ">
+			<div className="bg-gray-200 lg:w-fit sm:w-fit w-screen h-11"></div>
+			<div className=" lg:w-fit sm:w-fit w-screen h-screen grid lg:grid-cols-2 sm:grid-cols-1 divide-x-2">
+				<div className="lg:w-fit sm:w-fit w-screen  h-screen ">
 					<div className="overflow-y-auto h-96">
 						{items.length > 0 &&
 							items.map((item) => (
@@ -64,7 +65,7 @@ const PriceDetails=()=> {
 						<div className="grid grid-cols-2">
 							<div>Discount </div>
 							<div className="text-right text-green-500 font-medium mr-28">
-								-Rs100
+								-{discountTotal}
 							</div>
 						</div>
 						<div className="grid grid-cols-2">
@@ -75,12 +76,12 @@ const PriceDetails=()=> {
 						</div>
 					</div>
 				</div>
-				<div >
-					<PaymentOptions/>
+				<div className="lg:w-fit sm:w-fit w-screen ">
+					<PaymentOptions />
 				</div>
 			</div>
 		</>
 	);
-}
+};
 
-export default PriceDetails
+export default PriceDetails;

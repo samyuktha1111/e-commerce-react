@@ -1,36 +1,30 @@
-import React,{useState} from 'react'
-import {useNavigate} from 'react-router-dom'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import UPIPayment from './UPIPayment';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 
-
 function PaymentOptions() {
-	const navigate=useNavigate()
+	const navigate = useNavigate();
 	const [open, setOpen] = useState(true);
-	const [display,setDisplay]=useState(false)
-	const [scan,setScan]=useState(false)
-	const delivery=()=>
-	{
-		setDisplay(true)
-	}
-	const card=()=>
-	{
-		setDisplay(false)
-		
-	}
-	const payment=()=>
-	{
-		display?navigate('/order'):navigate('/pay')
-	}
-	const upiHandler=()=>
-	{
-		setScan(true)
-		setDisplay(true)
-	}
-	
-  return (
+	const [display, setDisplay] = useState(false);
+	const [scan, setScan] = useState(false);
+	const delivery = () => {
+		setDisplay(true);
+	};
+	const card = () => {
+		setDisplay(false);
+	};
+	const payment = () => {
+		display ? navigate('/order') : navigate('/pay');
+	};
+	const upiHandler = () => {
+		setScan(true);
+		setDisplay(true);
+	};
+
+	return (
 		<>
 			{scan && (
 				<Dialog open={open}>
@@ -90,7 +84,7 @@ function PaymentOptions() {
 				</div>
 				<div className="text-justify ml-16 mt-5 flex">
 					<input type="radio" name="pay" onClick={card} />
-					<label className="ml-16">Credit/Debit/ATM Card</label>
+					<label className="ml-16">Credit/Debit/ATMCard</label>
 
 					<img
 						src="https://freepngimg.com/save/25744-credit-card-visa-and-master-card-clipart/1066x220"
@@ -119,4 +113,4 @@ function PaymentOptions() {
 	);
 }
 
-export default PaymentOptions
+export default PaymentOptions;

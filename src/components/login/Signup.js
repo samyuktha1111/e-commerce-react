@@ -1,29 +1,33 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye';
 import { useNavigate } from 'react-router';
 
-import { LOGIN } from '../Types';
 
 
-
-const Loginform = () => {
+const Signup = () => {
 	const navigate = useNavigate();
-	const initialValues = { phonenumber: '', email: '', password: '' };
+	const initialValues = {
+		phonenumber: '',
+		username: '',
+		email: '',
+		password: '',
+	};
 	const [formValues, setFormValues] = useState(initialValues);
+	const [display, setDisplay] = useState(false);
 	const [formErrors, setFormErrors] = useState({});
 	const [isSubmit, setIsSubmit] = useState(false);
 	const [type, setType] = useState('password');
+	const users = JSON.parse(localStorage.getItem('users')) || [];
 
-	const dispatch = useDispatch();
+	
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormValues({ ...formValues, [name]: value });
-		console.log(formValues);
 	};
-	
+
 	const handleToggle = () => {
 		type === 'password' ? setType('text') : setType('password');
 	};
@@ -35,8 +39,24 @@ const Loginform = () => {
 	};
 	useEffect(() => {
 		if (Object.keys(formErrors).length === 0 && isSubmit) {
-			dispatch({ type: LOGIN, payload: { formValues } });
-			navigate('/user');
+			let alreadypresent = false;
+			users.forEach((item, index) => {
+				if (
+					item.email === formValues.email ||
+					item.phonenumber === formValues.phonenumber
+				) {
+					alreadypresent = true;
+				}
+			});
+			if (!alreadypresent) {
+				users.push(formValues);
+				console.log(users);
+				localStorage.setItem('users', JSON.stringify(users));
+				
+				navigate('/user');
+			} else {
+				setDisplay(true);
+			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [formErrors]);
@@ -44,16 +64,20 @@ const Loginform = () => {
 		const errors = {};
 		const usernamevalidation = /^[A-Za-z0-9]{4,16}$/i;
 		const emailvalidation = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}/i;
-
+		const phonevalidation = /[7-9]\d{9}/;
 		// eslint-disable-next-line no-useless-escape
 		const passwordvalidation =
 			// eslint-disable-next-line no-useless-escape
 			/^(?=.*[a-z])(?=.[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})/i;
 		if (!values.phonenumber) {
 			errors.phonenumber = '!phone number is required';
-		} else if (!usernamevalidation.test(values.phonenumber)) {
-			errors.phonenumber =
-				'!phone number must be from 4-16 char and special char are not allowed';
+		} else if (!phonevalidation.test(values.phonenumber)) {
+			errors.phonenumber = '! invalid phone number';
+		}
+		if (!values.username) {
+			errors.username = '!username is required';
+		} else if (!usernamevalidation.test(values.username)) {
+			errors.username = '!The username must have 4-16 char and no special char';
 		}
 		if (!values.email) {
 			errors.email = '!email is required';
@@ -66,18 +90,23 @@ const Loginform = () => {
 			errors.password =
 				'!The password must have min 1 uppercase,1 lowercase,1 numeric char,1 special char,must be 8 char or longer';
 		}
-		
+
 		return errors;
 	};
 
 	return (
-		<div className=" shadow-2xl bg-blue-200 w-1/3 mt-11 border border-blue-700 justify-center h-fit mx-auto">
+		<div className=" shadow-2xl bg-blue-200  lg:w-fit md:w-fit sm:w-fit w-fit mt-11 border border-blue-700 justify-center h-fit mx-auto">
+			{display && (
+				<div className="text-2xl font-bold text-red-700">
+					USER ALREADY EXISTS!!!!
+				</div>
+			)}
 			<form onSubmit={handleSubmit}>
 				<div className="grid grid-flow-row gap-2">
 					<h1 className="text-2xl text-gray-700 mt-6">SIGN UP </h1>
-					<div className="text-justify ml-11 mt-6">
+					<div className="text-justify ml-8 mt-6">
 						<label className="text-lg  ">PhoneNumber</label>
-
+<br/>
 						<input
 							type="text"
 							name="phonenumber"
@@ -88,7 +117,20 @@ const Loginform = () => {
 						/>
 						<p className="text-red-700 text-sm">{formErrors.phonenumber}</p>
 					</div>
-					<div className="text-justify ml-11 mt-6">
+					<div className="text-justify ml-8 mt-6">
+						<label className="text-lg  ">Username</label>
+<br/>
+						<input
+							type="text"
+							name="username"
+							placeholder="username"
+							className="w-96 h-12 pl-4 border-double border-4 border-gray-400"
+							value={formValues.username}
+							onChange={handleChange}
+						/>
+						<p className="text-red-700 text-sm">{formErrors.username}</p>
+					</div>
+					<div className="text-justify ml-8 mt-6">
 						<label className="text-lg ">Email</label>
 						<br />
 						<input
@@ -101,9 +143,9 @@ const Loginform = () => {
 						/>
 						<p className="text-red-700 text-sm">{formErrors.email}</p>
 					</div>
-					<div className="text-justify ml-11 mt-6">
+					<div className="text-justify ml-8 mt-6">
 						<label className="label1">Password</label>
-
+<br/>
 						<input
 							type={type}
 							name="password"
@@ -117,10 +159,15 @@ const Loginform = () => {
 						</span>
 						<p className="text-red-700 text-sm">{formErrors.password}</p>
 					</div>
-					<br/>
-<div className='text-gray-500 text-sm'>By continuing, I agree to the <span className='text-pink-700'>Terms of Use and Privacy Policy</span></div>
+					<br />
+					<div className="text-gray-500 text-sm">
+						By continuing, I agree to the
+						<span className="text-pink-700">
+							Terms of Use and Privacy Policy
+						</span>
+					</div>
 					<div>
-						<button className="text-justify mt-8 ml-0 h-14 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-52   mb-5 rounded">
+						<button className="text-justify mt-8  h-14 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-48   mb-5 rounded">
 							SIGN UP
 						</button>
 					</div>
@@ -129,4 +176,4 @@ const Loginform = () => {
 		</div>
 	);
 };
-export default Loginform;
+export default Signup;

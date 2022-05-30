@@ -1,34 +1,29 @@
-import React from 'react'
-import {useSelector,useDispatch} from 'react-redux'
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddSharpIcon from '@mui/icons-material/AddSharp';
 import RemoveSharpIcon from '@mui/icons-material/RemoveSharp';
 import EmptyCart from './EmptyCart';
-import {
-	DELETE_CART,
-	INCREMENT,
-	DECREMENT,
-	
-} from '../Types';
+import { DELETE_CART, INCREMENT, DECREMENT } from '../Types';
 function CartDetails() {
-    const dispatch=useDispatch()
-    const items = useSelector((state) => state?.items);
-    const plusHandler = (id) => {
-			dispatch({ type: INCREMENT, payload: { id } });
-		};
-		const minusHandler = (id) => {
-			dispatch({ type: DECREMENT, payload: { id } });
-		};
+	const dispatch = useDispatch();
+	const items = useSelector((state) => state?.items);
+	const plusHandler = (id) => {
+		dispatch({ type: INCREMENT, payload: { id } });
+	};
+	const minusHandler = (id) => {
+		dispatch({ type: DECREMENT, payload: { id } });
+	};
 
-		const removeHandler = (id) => {
-			dispatch({ type: DELETE_CART, payload: { id } });
-		};
-  return (
-		<div  >
+	const removeHandler = (id) => {
+		dispatch({ type: DELETE_CART, payload: { id } });
+	};
+	return (
+		<div>
 			{items.length > 0 ? (
 				items.map((item) => (
 					<div className="py-10 ">
-						<div className=" grid grid-cols-7 gap-2  w-screen  h-24 ">
+						<div className=" grid grid-cols-7 gap-2  lg:w-screen md:w-screen sm:w-screen w-screen h-24 ">
 							<div>
 								<img
 									src={item.image}
@@ -54,7 +49,7 @@ function CartDetails() {
 							<div>
 								<div className="mt-6 px-11">
 									<span className="bg-gray-200 rounded-full px-3 py-1 text-sm font-base mb-2">
-										Rs {item.price}
+										Rs {item.price*10}
 									</span>
 								</div>
 							</div>
@@ -74,9 +69,9 @@ function CartDetails() {
 									className=" border border-black text-white  bg-blue-500 "
 								/>
 							</div>
-							<div className="mt-6 px-11">
+							<div className="mt-6 px-11 ">
 								<span className="bg-gray-200  rounded-full px-3 py-1 text-sm font-base mb-2">
-									Rs {item.amount}
+									Rs {parseFloat(item.amount).toFixed(2)}
 								</span>
 							</div>
 						</div>
@@ -90,4 +85,4 @@ function CartDetails() {
 	);
 }
 
-export default CartDetails
+export default CartDetails;

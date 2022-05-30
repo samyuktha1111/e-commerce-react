@@ -1,22 +1,21 @@
-import React from 'react'
+import React from 'react';
 
 import { useDispatch } from 'react-redux';
 import { ADD_CART } from '../Types';
-const ProductDetail=({setOpen}) =>{
- 
-  const details = JSON.parse(localStorage.getItem('item'));
-  const dispatch=useDispatch();
-   const { image, title, description, price,discount } = details;
-   
-    const orderHandler = (item) => {
-			
-			dispatch({ type: ADD_CART, payload: {...item,qty:1,amount:item.price} });
-      setOpen(false)
-	
-			
-		};
-		console.log(discount)
-  return (
+const ProductDetail = ({ setOpen }) => {
+	const details = JSON.parse(localStorage.getItem('item'));
+	const dispatch = useDispatch();
+	const { image, title, description, price, discount } = details;
+
+	const orderHandler = (item) => {
+		dispatch({
+			type: ADD_CART,
+			payload: { ...item, qty: 1, amount: item.price*10 },
+		});
+		setOpen(false);
+	};
+	console.log(discount);
+	return (
 		<>
 			<div className="grid grid-cols-2 gap-2">
 				<img
@@ -27,13 +26,15 @@ const ProductDetail=({setOpen}) =>{
 				<div className="grid grid-row-4 gap-y-0 mt-2 ">
 					<div className="font-bold text-xl ">{title}</div>
 					<div className=" text-sm  mr-4 ">{description}</div>
-					<br/>
-					<div className='grid grid-cols-2 gap-1'>
-					<div className="text-2xl text-black line-through">Rs{price}</div>
-					<div className="text-2xl text-green-500">Rs{price-discount}</div>
+					<br />
+					<div className="grid grid-cols-2 gap-1">
+						<div className="text-2xl text-black line-through">
+							Rs{price * 10}
+						</div>
+						<div className="text-2xl text-green-500">Rs{(price*10) - discount}</div>
 					</div>
 					<div>
-						<br/>
+						<br />
 						<button
 							onClick={() => orderHandler(details)}
 							class="bg-cyan-500 hover:bg-cyan-700 text-white py-2 px-4  mt-2 mb-5 text-sm font-bold rounded hover:scale-125 transition ease-in-out duration-1000"
@@ -45,6 +46,6 @@ const ProductDetail=({setOpen}) =>{
 			</div>
 		</>
 	);
-}
+};
 
-export default ProductDetail
+export default ProductDetail;

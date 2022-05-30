@@ -1,23 +1,23 @@
-import React from 'react'
-import {useState} from 'react'
-import {useNavigate} from 'react-router-dom'
-import {useSelector} from 'react-redux'
+import React from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 function CardPayment() {
-	const navigate=useNavigate()
-	const initialValues={card_number:'',cvc:'',code:''}
-	const[forms,setForms]=useState(initialValues)
-	const subtotal=useSelector((state)=>state.subtotal)
-	const payHandler=()=>
-	{
-      navigate('/order')
-	}
-  return (
-		<div className="w-1/3 mx-auto shadow-lg h-fit mt-32 bg-purple-100">
-			<h1 className="text-center text-gray-500 font-semisolid text-2xl ">
+	const navigate = useNavigate();
+	const initialValues = { card_number: '', cvc: '', code: '' };
+	const [forms, setForms] = useState(initialValues);
+	const subtotal = useSelector((state) => state.subtotal);
+	const discountTotal = useSelector((state) => state.discountTotal);
+	const payHandler = () => {
+		navigate('/order');
+	};
+	return (
+		<div className="lg:w-fit sm:w-fit w-fit  text-justify mx-auto  shadow-lg h-fit mt-32 bg-purple-100">
+			<h1 className="text-center  text-gray-500 font-semisolid text-2xl ">
 				Card Details
 			</h1>
 			<form>
-				<div className="text-justify ml-11 mt-6">
+				<div className="text-justify ml-6 mt-6">
 					<div className="text-gray-700 text-lg mb-2">Card number</div>
 					<input
 						type="text"
@@ -29,7 +29,7 @@ function CardPayment() {
 				</div>
 
 				<div className=" text-center ">
-					<div className="text-justify ml-11 mt-7">
+					<div className="text-justify ml-6 mt-7">
 						<div className="text-gray-700 text-lg mb-2">Expiry date</div>
 
 						<select name="exp_month" className="h-11 w-48 text-center">
@@ -50,8 +50,7 @@ function CardPayment() {
 
 						<select name="exp_YY" className="h-11 w-48 text-center">
 							<option value="">Year</option>
-							<option value="20">2020</option>
-							<option value="21">2021</option>
+
 							<option value="22">2022</option>
 							<option value="23">2023</option>
 							<option value="24">2024</option>
@@ -59,7 +58,7 @@ function CardPayment() {
 					</div>
 				</div>
 				<div className="grid grid-flow-col gap-1 text-center">
-					<div className="text-justify ml-11 mt-6">
+					<div className="text-justify ml-6 mt-6">
 						<div className="text-gray-700 text-lg mb-2">CVC</div>
 						<input
 							type="text"
@@ -81,14 +80,15 @@ function CardPayment() {
 					</div>
 				</div>
 
-		
-					<button onClick={payHandler} className=" text-justify mt-16 ml-0 h-14 bg-purple-600 hover:bg-purple-700 text-white text-sm font-bold py-2 px-48   mb-5 rounded ">
-						Pay {subtotal}
-					</button>
-				
+				<button
+					onClick={payHandler}
+					className=" text-justify mt-16 ml-0 h-14 bg-purple-600 hover:bg-purple-700 text-white text-sm font-bold py-2 px-44   mb-5 rounded "
+				>
+					Pay {subtotal-discountTotal+50}
+				</button>
 			</form>
 		</div>
 	);
 }
 
-export default CardPayment
+export default CardPayment;
