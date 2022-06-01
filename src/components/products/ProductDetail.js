@@ -1,20 +1,31 @@
 import React from 'react';
-
-import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch,useSelector } from 'react-redux';
 import { ADD_CART } from '../Types';
 const ProductDetail = ({ setOpen }) => {
 	const details = JSON.parse(localStorage.getItem('item'));
 	const dispatch = useDispatch();
+	const navigate=useNavigate()
+	
 	const { image, title, description, price, discount } = details;
-
+const user = JSON.parse(localStorage.getItem('login')); 
+console.log("user",user)
 	const orderHandler = (item) => {
+		if(user)
+		{
 		dispatch({
 			type: ADD_CART,
-			payload: { ...item, qty: 1, amount: item.price*10 },
+			payload: { ...item, qty: 1, amount: item.price*100 },
 		});
 		setOpen(false);
+		
+	}
+	else{
+       navigate('/user')
+	}
 	};
 	console.log(discount);
+	let amt = parseFloat(price * 100 - discount).toFixed(2)
 	return (
 		<>
 			<div className="grid grid-cols-2 gap-2">
@@ -29,9 +40,9 @@ const ProductDetail = ({ setOpen }) => {
 					<br />
 					<div className="grid grid-cols-2 gap-1">
 						<div className="text-2xl text-black line-through">
-							Rs{price * 10}
+							Rs{price * 100}
 						</div>
-						<div className="text-2xl text-green-500">Rs{(price*10) - discount}</div>
+						<div className="text-2xl text-green-500">Rs{amt}</div>
 					</div>
 					<div>
 						<br />

@@ -81,7 +81,7 @@ const Products = ({ item }) => {
 										</div>
 										<div className="grid grid-flow-col gap-5 pb-2 px-3">
 											<span className="bg-gray-200 rounded-full px-3 py-1 text-sm font-base mb-2">
-												Rs {product.price}
+												Rs {product.price*100}
 											</span>
 											<span className="bg-gray-200 rounded-full px-3 py-1 text-sm font-base mb-2">
 												Flat 50%

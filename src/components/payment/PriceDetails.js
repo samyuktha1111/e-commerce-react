@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import PaymentOptions from './PaymentOptions';
 
 const PriceDetails = () => {
+
+	
 	const items = useSelector((state) => state.items);
 	const subtotal = useSelector((state) => state.subtotal);
 	const carttotal = useSelector((state) => state.carttotal);

@@ -20,7 +20,7 @@ const Signup = () => {
 	const [formErrors, setFormErrors] = useState({});
 	const [isSubmit, setIsSubmit] = useState(false);
 	const [type, setType] = useState('password');
-	const users = JSON.parse(localStorage.getItem('users')) || [];
+	const users = JSON.parse(localStorage.getItem('users2')) || [];
 
 	
 	const handleChange = (e) => {
@@ -51,7 +51,7 @@ const Signup = () => {
 			if (!alreadypresent) {
 				users.push(formValues);
 				console.log(users);
-				localStorage.setItem('users', JSON.stringify(users));
+				localStorage.setItem('users2', JSON.stringify(users));
 				
 				navigate('/user');
 			} else {

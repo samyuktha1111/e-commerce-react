@@ -1,27 +1,31 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UPIPayment from './UPIPayment';
-
+import {useSelector,useDispatch} from 'react-redux'
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-
+import {EMPTY_CART} from '../Types'
 function PaymentOptions() {
+	const dispatch=useDispatch()
 	const navigate = useNavigate();
 	const [open, setOpen] = useState(true);
-	const [display, setDisplay] = useState(false);
+	const carts = JSON.parse(localStorage.getItem('carts')) || [];
 	const [scan, setScan] = useState(false);
-	const delivery = () => {
-		setDisplay(true);
-	};
+	const items=useSelector((state)=>state.items)
 	const card = () => {
-		setDisplay(false);
-	};
+		navigate('/pay');
+	}
 	const payment = () => {
-		display ? navigate('/order') : navigate('/pay');
+	
+	navigate('/order') 
+	carts.push(...items);
+	console.log(carts);
+	localStorage.setItem('carts', JSON.stringify(carts));
+	dispatch({type:EMPTY_CART})
 	};
 	const upiHandler = () => {
 		setScan(true);
-		setDisplay(true);
+		
 	};
 
 	return (
@@ -97,7 +101,7 @@ function PaymentOptions() {
 					<label className="ml-16">Net Banking</label>
 				</div>
 				<div className="text-justify ml-16 mt-4">
-					<input type="radio" name="pay" onClick={delivery} />
+					<input type="radio" name="pay"  />
 					<label className="ml-16">Cash on Delivery</label>
 				</div>
 				<div className="text-right mr-24 mt-36">
@@ -105,7 +109,7 @@ function PaymentOptions() {
 						onClick={payment}
 						className="bg-red-600 hover:bg-red-700 text-white text-sm font-bold py-2 px-4  rounded hover:scale-125 transition ease-in-out duration-1000"
 					>
-						{display ? 'Place order' : 'Continue'}
+						Place Order
 					</button>
 				</div>
 			</div>

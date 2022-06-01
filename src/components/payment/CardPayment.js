@@ -1,38 +1,91 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch} from 'react-redux';
+import { EMPTY_CART } from '../Types';
 function CardPayment() {
+	const dispatch=useDispatch()
 	const navigate = useNavigate();
-	const initialValues = { card_number: '', cvc: '', code: '' };
+	const initialValues = { card_number: '', cvv: '', code: '' };
 	const [forms, setForms] = useState(initialValues);
+	const [formErrors, setFormErrors] = useState({});
+	const [isSubmit, setIsSubmit] = useState(false);
 	const subtotal = useSelector((state) => state.subtotal);
 	const discountTotal = useSelector((state) => state.discountTotal);
-	const payHandler = () => {
-		navigate('/order');
+	const items = useSelector((state) => state.items);
+	const carts = JSON.parse(localStorage.getItem('carts')) || [];
+	const payHandler = (e) => {
+		e.preventDefault();
+
+		setFormErrors(validate(forms));
+		setIsSubmit(true);
 	};
+		const handleChange = (e) => {
+			const { name, value } = e.target;
+			setForms({ ...forms, [name]: value });
+		};
+		useEffect(() => {
+			if (Object.keys(formErrors).length === 0 && isSubmit) {
+			navigate('/order');
+			carts.push(...items);
+			console.log(carts);
+			localStorage.setItem('carts', JSON.stringify(carts));
+			dispatch({ type: EMPTY_CART });
+			}
+			// eslint-disable-next-line react-hooks/exhaustive-deps
+		}, [formErrors]);
+		const validate = (values) => {
+			const errors = {};
+			const cardvalidation = /^5[1-5][0-9]{14}$/;
+			const cvvvalidation = /^[0-9]{3}$/;
+			
+			// eslint-disable-next-line no-useless-escape
+			
+			if (!values.card_number) {
+				errors.card_number = '!card number is required';
+			} else if (!cardvalidation.test(values.card_number)) {
+				errors.card_number = '! must start from 51 through 55 and 16 digits';
+			}
+			if (!values.cvv) {
+				errors.cvv = '!cvv is required';
+			} else if (!cvvvalidation.test(values.cvv)) {
+				errors.cvv = '!must contain 3 digits and no special char';
+			}
+		
+			
+
+			return errors;
+		};
 	return (
-		<div className="lg:w-fit sm:w-fit w-fit  text-justify mx-auto  shadow-lg h-fit mt-32 bg-purple-100">
+		<div className="lg:w-max sm:w-fit w-fit  text-justify mx-auto  shadow-lg h-fit mt-32 bg-purple-100">
 			<h1 className="text-center  text-gray-500 font-semisolid text-2xl ">
 				Card Details
 			</h1>
 			<form>
-				<div className="text-justify ml-6 mt-6">
+				<div className="text-justify  px-6 mt-6">
 					<div className="text-gray-700 text-lg mb-2">Card number</div>
 					<input
 						type="text"
+						size="20"
+						autoComplete='off'
 						name="card_number"
 						placeholder="card number"
 						value={forms.card_number}
 						className="h-11 w-96 text-center"
+						onChange={handleChange}
 					/>
+					<p className="text-red-700 text-sm">{formErrors.card_number}</p>
 				</div>
 
 				<div className=" text-center ">
-					<div className="text-justify ml-6 mt-7">
+					<div className="text-justify px-6 mt-7">
 						<div className="text-gray-700 text-lg mb-2">Expiry date</div>
 
-						<select name="exp_month" className="h-11 w-48 text-center">
+						<select
+							name="exp_month"
+							className="h-11 w-48 text-center"
+							onChange={handleChange}
+						>
 							<option value="">Month</option>
 							<option value="01">01</option>
 							<option value="01">02</option>
@@ -48,7 +101,11 @@ function CardPayment() {
 							<option value="12">12</option>
 						</select>
 
-						<select name="exp_YY" className="h-11 w-48 text-center">
+						<select
+							name="exp_YY"
+							className="h-11 w-48 text-center"
+							onChange={handleChange}
+						>
 							<option value="">Year</option>
 
 							<option value="22">2022</option>
@@ -57,34 +114,27 @@ function CardPayment() {
 						</select>
 					</div>
 				</div>
-				<div className="grid grid-flow-col gap-1 text-center">
-					<div className="text-justify ml-6 mt-6">
-						<div className="text-gray-700 text-lg mb-2">CVC</div>
+			
+					<div className="text-justify px-16 mt-6">
+						<div className="text-gray-700 text-lg mb-2">CVV</div>
 						<input
 							type="text"
-							name="cvc"
+							name="cvv"
 							placeholder="***"
-							value={forms.card_number}
-							className="h-11 w-40 text-center"
+							value={forms.cvv}
+							className="h-11 w-72 text-center"
+							onChange={handleChange}
 						/>
+						<p className="text-red-700 text-sm">{formErrors.cvv}</p>
 					</div>
-					<div className="text-justify ml-2 mt-6">
-						<div className="text-gray-700 text-lg mb-2">ZIP code</div>
-						<input
-							type="text"
-							name="code"
-							placeholder="zip"
-							value={forms.card_number}
-							className="h-11 w-40 text-center"
-						/>
-					</div>
-				</div>
+				
+			
 
 				<button
 					onClick={payHandler}
-					className=" text-justify mt-16 ml-0 h-14 bg-purple-600 hover:bg-purple-700 text-white text-sm font-bold py-2 px-44   mb-5 rounded "
+					className=" text-justify mt-16 ml-4 h-14 bg-purple-600 hover:bg-purple-700 text-white text-sm font-bold py-2 px-44   mb-5 rounded "
 				>
-					Pay {subtotal-discountTotal+50}
+					Pay {subtotal - discountTotal + 50}
 				</button>
 			</form>
 		</div>

@@ -18,6 +18,7 @@ function CartDetails() {
 	const removeHandler = (id) => {
 		dispatch({ type: DELETE_CART, payload: { id } });
 	};
+	
 	return (
 		<div>
 			{items.length > 0 ? (
@@ -49,7 +50,7 @@ function CartDetails() {
 							<div>
 								<div className="mt-6 px-11">
 									<span className="bg-gray-200 rounded-full px-3 py-1 text-sm font-base mb-2">
-										Rs {item.price*10}
+										Rs {item.price*100}
 									</span>
 								</div>
 							</div>

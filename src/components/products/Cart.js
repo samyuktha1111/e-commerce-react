@@ -17,10 +17,14 @@ const mapStateToProps = (state) => {
 	};
 };
 const Cart = (props) => {
+	
+	
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const checkOutHandler = () => {
 		navigate('/price');
+		
+	
 	};
 	console.log('items', props.items);
 	useEffect(() => {

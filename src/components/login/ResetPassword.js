@@ -1,17 +1,19 @@
 import { useState, useEffect } from 'react';
-
+import { LOGIN } from '../Types';
+import { useDispatch } from 'react-redux';
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye';
 import { useNavigate } from 'react-router';
 
-const Login = () => {
+const ResetPassword = () => {
+    console.log(JSON.parse(localStorage.getItem('users')))
 	const navigate = useNavigate();
 	const [display, setDisplay] = useState(false);
-
-	const users = JSON.parse(localStorage.getItem('users2'));
-
-	const initialValues = { username: '', password: '' };
+	const dispatch = useDispatch();
+	const users = JSON.parse(localStorage.getItem('users'));
+console.log(users)
+	const initialValues = {email: '', password: '' };
 	const [formValues, setFormValues] = useState(initialValues);
 	const [formErrors, setFormErrors] = useState({});
 	const [isSubmit, setIsSubmit] = useState(false);
@@ -21,10 +23,9 @@ const Login = () => {
 		const { name, value } = e.target;
 		setFormValues({ ...formValues, [name]: value });
 	};
-const registerHandler=()=>
-{
-	navigate('/login')
-}
+	const registerHandler = () => {
+		navigate('/login');
+	};
 	const handleToggle = () => {
 		type === 'password' ? setType('text') : setType('password');
 	};
@@ -39,14 +40,15 @@ const registerHandler=()=>
 			let credentials = false;
 			users.forEach((item, index) => {
 				if (
-					item.username === formValues.username &&
-					item.password === formValues.password
+					item.email === formValues.email 
+					
 				) {
-					credentials = true;
+					item.password=formValues.password
+                    
 				}
 			});
 			if (credentials) {
-				localStorage.setItem('login', JSON.stringify(formValues));
+				dispatch({ type: LOGIN, payload: { formValues } });
 				navigate('/');
 			} else {
 				setDisplay(true);
@@ -57,18 +59,18 @@ const registerHandler=()=>
 	const validate = (values) => {
 		const errors = {};
 
-		const usernamevalidation = /^[A-Za-z0-9]{4,16}$/i;
+		const emailvalidation = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}/i;
 
 		// eslint-disable-next-line no-useless-escape
 		const passwordvalidation =
 			// eslint-disable-next-line no-useless-escape
 			/^(?=.*[a-z])(?=.[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})/i;
 
-		if (!values.username) {
-			errors.username = '!username is required';
-		} else if (!usernamevalidation.test(values.username)) {
-			errors.username = '!The username must have 4-16 char and no special char';
-		}
+			if (!values.email) {
+				errors.email = '!email is required';
+			} else if (!emailvalidation.test(values.email)) {
+				errors.email = '!The email is not valid';
+			}
 		if (!values.password) {
 			errors.password = '!password is required';
 		} else if (!passwordvalidation.test(values.password)) {
@@ -100,17 +102,17 @@ const registerHandler=()=>
 						<p className="text-2xl text-black font-bold italic">THE BRAND</p>
 					</div>
 					<div className="text-justify ml-6 ">
-						<label className="text-lg ">Username</label>
+						<label className="text-lg ">Email</label>
 						<br />
 						<input
 							type="text"
-							name="username"
+							name="email"
 							placeholder="name"
-							value={formValues.username}
+							value={formValues.email}
 							className="w-96 h-12 pl-4 border border-gray-400"
 							onChange={handleChange}
 						/>
-						<p className="text-red-700 text-sm">{formErrors.username}</p>
+						<p className="text-red-700 text-sm">{formErrors.email}</p>
 					</div>
 					<div className="text-justify ml-6 mt-6">
 						<label className="label1">Password</label>
@@ -131,21 +133,22 @@ const registerHandler=()=>
 					<br />
 					<div className="text-gray-500 text-sm text-left ml-8 ">
 						New member ?
-						<span onClick={registerHandler} className="text-pink-700 cursor-pointer underline underline-offset-1">
-							 		  Register
+						<span
+							onClick={registerHandler}
+							className="text-pink-700 cursor-pointer underline underline-offset-1"
+						>
+							Register
 						</span>
-					
 					</div>
 
 					<div>
 						<button className="text-justify mt-8  h-14 bg-pink-600 hover:bg-pink-700 text-white text-sm font-bold py-2 px-48   mb-5 rounded">
-							LOGIN
+							RESET
 						</button>
 					</div>
-					
 				</div>
 			</form>
 		</div>
 	);
 };
-export default Login;
+export default ResetPassword;

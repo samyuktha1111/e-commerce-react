@@ -9,10 +9,12 @@ import store from './components/store';
 import {Provider} from 'react-redux'
 import {useState} from 'react'
 import CardPayment from './components/payment/CardPayment';
-
+import ResetPassword from './components/login/ResetPassword';
 import Signup from './components/login/Signup';
 import Login from './components/login/Login';
 import Mainpage from './components/main/Mainpage';
+import CartOrders from './components/login/CartOrders';
+import Address from './components/address/Address';
 function App() {
 	const[item,setItem]=useState('')
 	const category=item1=>
@@ -33,6 +35,9 @@ function App() {
 						<Route exact path="/login" element={<Signup />} />
 						<Route exact path="/user" element={<Login />} />
 						<Route exact path="/" element={<Mainpage />} />
+						<Route exact path="/reset" element={<ResetPassword />} />
+						<Route exact path="/carto" element={<CartOrders />} />
+						<Route exact path="/address" element={<Address />} />
 					</Routes>
 				</Router>
 			</div>

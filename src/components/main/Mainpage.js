@@ -16,7 +16,16 @@ const Mainpage=()=>{
 	const navigate=useNavigate()
 const handleClick=(menu)=>
 {
+	if(menu.name==='Log Out')
+	{
+		localStorage.removeItem('login')
+		
+		navigate('/')
+	
+	}
+	else{
 navigate(menu.link)
+	}
 }
     const [open, setOpen] = useState(true);
     const Menus = [
@@ -25,11 +34,11 @@ navigate(menu.link)
 				link: '/home',
 				src: <ShoppingBasketIcon />,
 			},
-			{ name: 'Orders', link: '/home', gap: true, src: <ShoppingCartIcon /> },
+			{ name: 'Orders', link: '/carto', gap: true, src: <ShoppingCartIcon /> },
 			{ name: 'Log In', link: '/user', gap: true, src: <LoginIcon/> },
 			{ name: 'Sign Up', link: '/login' ,src:<WindowIcon />},
 			{ name: 'Log Out', link: '/user',src:<LogoutIcon/> },
-			{ name: 'CONTACT', link: '/home' ,src:<CallIcon/>},
+			{ name: 'ADDRESS', link: '/address' ,src:<CallIcon/>},
 		];
   return (
 		<>

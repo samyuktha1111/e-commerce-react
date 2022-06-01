@@ -10,6 +10,8 @@ import {
 	SUBTOTAL,
 	LOGIN,
 	DISCOUNT_TOTAL,
+	LOGOUT,
+	ADD_ADDRESS,
 } from './Types';
 import axios from 'axios';
 export function* AddCartUser(action) {
@@ -50,10 +52,10 @@ export function* cartTotal() {
 export function* emptycart() {
 	yield put({ type: 'EMPTY_CART_SUCCESS' });
 }
-export function* loginsuccess(action) {
-	yield put({ type: 'LOGIN_SUCCESS', payload: action.payload.formValues });
-}
 
+export function* addressSuccess(action) {
+	yield put({ type: 'ADD_ADDRESS_SUCCESS',payload:action.payload.address });
+}
 export function* watchUser() {
 	yield all(
 		yield takeLatest(GET_PRODUCTS, getProductsSuccess),
@@ -65,6 +67,8 @@ export function* watchUser() {
 		yield takeEvery(DISCOUNT_TOTAL, discount),
 		yield takeEvery(CART_TOTAL, cartTotal),
 		yield takeEvery(EMPTY_CART, emptycart),
-		yield takeEvery(LOGIN, loginsuccess)
+	
+		yield takeEvery(ADD_ADDRESS,addressSuccess),
+
 	);
 }

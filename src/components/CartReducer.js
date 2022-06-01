@@ -3,8 +3,9 @@ const initialState = {
 	products: [],
 	subtotal: 0,
 	carttotal: 0,
-	user: {},
-    discountTotal:0
+	user: null,
+    discountTotal:0,
+	notes:[]
 };
 export const CartReducer = (state = initialState, action) => {
 	// eslint-disable-next-line default-case
@@ -40,7 +41,7 @@ export const CartReducer = (state = initialState, action) => {
 					return {
 						...curElem,
 						qty: curElem.qty + 1,
-						amount: (curElem.qty + 1) * curElem.price * 10,
+						amount: (curElem.qty + 1) * curElem.amount,
 					};
 				}
 				return curElem;
@@ -53,7 +54,7 @@ export const CartReducer = (state = initialState, action) => {
 						return {
 							...curElem,
 							qty: curElem.qty - 1,
-							amount: (curElem.qty - 1) * curElem.price * 10,
+							amount: (curElem.qty - 1) * curElem.amount,
 						};
 					}
 					return curElem;
@@ -70,7 +71,8 @@ export const CartReducer = (state = initialState, action) => {
 			return { ...state, subtotal: parseFloat(total).toFixed(2) };
 		case 'DISCOUNT_TOTAL_SUCCESS':
 			const discount = state.items.reduce(
-				(total, currentValue) => (total = total + (currentValue.discount*currentValue.qty)),
+				(total, currentValue) =>
+					(total = total + currentValue.discount * currentValue.qty),
 				0
 			);
 			return { ...state, discountTotal: parseFloat(discount).toFixed(2) };
@@ -83,12 +85,12 @@ export const CartReducer = (state = initialState, action) => {
 		case 'EMPTY_CART_SUCCESS':
 			return { ...state, items: [] };
 
-		case 'LOGIN_SUCCESS':
-			return {
-				...state,
-				user: action.payload,
-			};
-
+		
+			case 'ADD_ADDRESS_SUCCESS':
+				{
+					state.notes.push(action.payload)
+					return state
+				}
 		default:
 			return state;
 	}
