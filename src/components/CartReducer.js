@@ -41,7 +41,7 @@ export const CartReducer = (state = initialState, action) => {
 					return {
 						...curElem,
 						qty: curElem.qty + 1,
-						amount: (curElem.qty + 1) * curElem.amount,
+						amount: (curElem.qty + 1) * curElem.price*100,
 					};
 				}
 				return curElem;
@@ -54,7 +54,7 @@ export const CartReducer = (state = initialState, action) => {
 						return {
 							...curElem,
 							qty: curElem.qty - 1,
-							amount: (curElem.qty - 1) * curElem.amount,
+							amount: (curElem.qty - 1) * curElem.price*100,
 						};
 					}
 					return curElem;

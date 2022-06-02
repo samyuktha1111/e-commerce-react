@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router';
 const Login = () => {
 	const navigate = useNavigate();
 	const [display, setDisplay] = useState(false);
-
+  const user = JSON.parse(localStorage.getItem('login')); 
 	const users = JSON.parse(localStorage.getItem('users2'));
 
 	const initialValues = { username: '', password: '' };
@@ -25,6 +25,9 @@ const registerHandler=()=>
 {
 	navigate('/login')
 }
+const resetHandler = () => {
+	navigate('/reset');
+};
 	const handleToggle = () => {
 		type === 'password' ? setType('text') : setType('password');
 	};
@@ -73,7 +76,7 @@ const registerHandler=()=>
 			errors.password = '!password is required';
 		} else if (!passwordvalidation.test(values.password)) {
 			errors.password =
-				'!The password must have min 1 uppercase,1 lowercase,1 numeric char,1 special char,must be 8 char or longer';
+				'!Not strong enough';
 		}
 
 		return errors;
@@ -84,6 +87,11 @@ const registerHandler=()=>
 			{display && (
 				<div className="text-2xl font-bold text-pink-700">
 					CREDENTIALS DO NOT MATCH!!!!
+				</div>
+			)}
+			{user && !display &&(
+				<div className="text-2xl font-bold text-pink-700">
+					U ARE ALREADY LOGGED IN!!!!
 				</div>
 			)}
 			<form onSubmit={handleSubmit}>
@@ -129,20 +137,32 @@ const registerHandler=()=>
 						<p className="text-red-700 text-sm">{formErrors.password}</p>
 					</div>
 					<br />
+				{ !user &&	<div>
 					<div className="text-gray-500 text-sm text-left ml-8 ">
 						New member ?
-						<span onClick={registerHandler} className="text-pink-700 cursor-pointer underline underline-offset-1">
-							 		  Register
+						<span
+							onClick={registerHandler}
+							className="text-pink-700 cursor-pointer underline underline-offset-1"
+						>
+							Register
 						</span>
-					
 					</div>
 
-					<div>
+				 	<div>
 						<button className="text-justify mt-8  h-14 bg-pink-600 hover:bg-pink-700 text-white text-sm font-bold py-2 px-48   mb-5 rounded">
 							LOGIN
 						</button>
 					</div>
-					
+					<div className="text-gray-500 text-sm text-center mb-4 mt-2 ">
+						Facing problem with login ?
+						<span
+							onClick={resetHandler}
+							className="text-pink-700 cursor-pointer underline underline-offset-1"
+						>
+							Reset
+						</span>
+					</div>
+					</div>}
 				</div>
 			</form>
 		</div>

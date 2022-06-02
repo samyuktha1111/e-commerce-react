@@ -15,7 +15,7 @@ import Ratings from './Ratings';
 const Products = ({ item }) => {
 	const dispatch = useDispatch();
 	const products = useSelector((state) => state?.products);
-
+    const [search,setSearch]=useState('')
 	const cartTotal = useSelector((state) => state?.carttotal);
 	const [dis, setDis] = useState(false);
 
@@ -44,10 +44,19 @@ const Products = ({ item }) => {
 	return (
 		<>
 			<div className="bg-gray-200 w-screen grid grid-cols-6 gap-4">
-				<div className="col-start-2 col-span-4 ">
+				<div className="col-start-1 col-span-2 ">
 					<h1 className=" text-center capitalize text-4xl text-black py-6">
 						Our products
 					</h1>
+				</div>
+				<div className="col-span-3 ">
+					<input
+						type="text"
+						placeholder="search"
+						className="w-full  h-12 mt-6 pl-4 "
+						onChange={(e) => setSearch(e.target.value)}
+					/>
+				
 				</div>
 				<div>
 					<ShoppingCartIcon
@@ -59,8 +68,17 @@ const Products = ({ item }) => {
 			</div>
 
 			<div className="grid grid-cols-1 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-3 justify-items-center mt-20">
-				{products &&
-					products.map(
+				{products && products.filter((val)=>{
+					if(search==='')
+					{
+						return val;
+					}
+					else if(val.title.toLowerCase().includes(search.toLowerCase()))
+					{
+                           return val;
+					}
+
+				}).map(
 						(product) =>
 							product.category === item && (
 								<div className="py-10" key={product.id}>
@@ -81,7 +99,7 @@ const Products = ({ item }) => {
 										</div>
 										<div className="grid grid-flow-col gap-5 pb-2 px-3">
 											<span className="bg-gray-200 rounded-full px-3 py-1 text-sm font-base mb-2">
-												Rs {product.price*100}
+												Rs {product.price * 100}
 											</span>
 											<span className="bg-gray-200 rounded-full px-3 py-1 text-sm font-base mb-2">
 												Flat 50%

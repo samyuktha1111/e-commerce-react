@@ -21,7 +21,7 @@ const Signup = () => {
 	const [isSubmit, setIsSubmit] = useState(false);
 	const [type, setType] = useState('password');
 	const users = JSON.parse(localStorage.getItem('users2')) || [];
-
+const user = JSON.parse(localStorage.getItem('login')); 
 	
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -50,6 +50,7 @@ const Signup = () => {
 			});
 			if (!alreadypresent) {
 				users.push(formValues);
+			
 				console.log(users);
 				localStorage.setItem('users2', JSON.stringify(users));
 				
@@ -88,7 +89,8 @@ const Signup = () => {
 			errors.password = '!password is required';
 		} else if (!passwordvalidation.test(values.password)) {
 			errors.password =
-				'!The password must have min 1 uppercase,1 lowercase,1 numeric char,1 special char,must be 8 char or longer';
+				//'!The password must have min 1 uppercase,1 lowercase,1 numeric char,1 special char,must be 8 char or longer';
+				'!Not strong enough'
 		}
 
 		return errors;
@@ -101,12 +103,17 @@ const Signup = () => {
 					USER ALREADY EXISTS!!!!
 				</div>
 			)}
+			{user && (
+				<div className="text-2xl font-bold text-red-700">
+					U ARE ALREADY LOGGED IN!!!!
+				</div>
+			)}
 			<form onSubmit={handleSubmit}>
 				<div className="grid grid-flow-row gap-2">
 					<h1 className="text-2xl text-gray-700 mt-6">SIGN UP </h1>
 					<div className="text-justify ml-8 mt-6">
 						<label className="text-lg  ">PhoneNumber</label>
-<br/>
+						<br />
 						<input
 							type="text"
 							name="phonenumber"
@@ -119,7 +126,7 @@ const Signup = () => {
 					</div>
 					<div className="text-justify ml-8 mt-6">
 						<label className="text-lg  ">Username</label>
-<br/>
+						<br />
 						<input
 							type="text"
 							name="username"
@@ -145,7 +152,7 @@ const Signup = () => {
 					</div>
 					<div className="text-justify ml-8 mt-6">
 						<label className="label1">Password</label>
-<br/>
+						<br />
 						<input
 							type={type}
 							name="password"
@@ -160,6 +167,7 @@ const Signup = () => {
 						<p className="text-red-700 text-sm">{formErrors.password}</p>
 					</div>
 					<br />
+				{!user &&	<div>
 					<div className="text-gray-500 text-sm">
 						By continuing, I agree to the
 						<span className="text-pink-700">
@@ -171,6 +179,7 @@ const Signup = () => {
 							SIGN UP
 						</button>
 					</div>
+					</div>}
 				</div>
 			</form>
 		</div>
