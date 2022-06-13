@@ -3,13 +3,11 @@ import { useSelector } from 'react-redux';
 import PaymentOptions from './PaymentOptions';
 
 const PriceDetails = () => {
-
-	
 	const items = useSelector((state) => state.items);
 	const subtotal = useSelector((state) => state.subtotal);
 	const carttotal = useSelector((state) => state.carttotal);
 	const discountTotal = useSelector((state) => state.discountTotal);
-	let amt = Number(subtotal) - Number(discountTotal)+Number(50);
+	let amt = Number(subtotal) - Number(discountTotal) + Number(50);
 	return (
 		<>
 			<div className="bg-gray-200 lg:w-fit sm:w-fit w-screen h-11"></div>

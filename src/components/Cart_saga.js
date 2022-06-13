@@ -8,9 +8,7 @@ import {
 	GET_PRODUCTS,
 	INCREMENT,
 	SUBTOTAL,
-	LOGIN,
 	DISCOUNT_TOTAL,
-	LOGOUT,
 	ADD_ADDRESS,
 } from './Types';
 import axios from 'axios';
@@ -25,11 +23,13 @@ export function* getProductsSuccess() {
 		console.log('state');
 		const response = yield call(axios.get, 'https://fakestoreapi.com/products');
 		console.log('state', response);
+		
 		yield put({
 			type: 'GET_PRODUCTS_SUCCESS',
 			products: response.data,
 			qty: 0,
 		});
+		
 	} catch (error) {
 		yield put({ type: 'GET_PRODUCTS_FAILURE', message: error.message });
 	}
@@ -54,7 +54,7 @@ export function* emptycart() {
 }
 
 export function* addressSuccess(action) {
-	yield put({ type: 'ADD_ADDRESS_SUCCESS',payload:action.payload.address });
+	yield put({ type: 'ADD_ADDRESS_SUCCESS', payload: action.payload.address });
 }
 export function* watchUser() {
 	yield all(
@@ -67,8 +67,6 @@ export function* watchUser() {
 		yield takeEvery(DISCOUNT_TOTAL, discount),
 		yield takeEvery(CART_TOTAL, cartTotal),
 		yield takeEvery(EMPTY_CART, emptycart),
-	
-		yield takeEvery(ADD_ADDRESS,addressSuccess),
-
+		yield takeEvery(ADD_ADDRESS, addressSuccess)
 	);
 }

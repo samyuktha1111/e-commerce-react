@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { useState } from 'react';
 import Navbar from './Navbar';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
@@ -8,43 +8,35 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 import CallIcon from '@mui/icons-material/Call';
 import { useNavigate } from 'react-router-dom';
-
 import Images from './Images';
-
-const Mainpage=()=>{
-	
-	const navigate=useNavigate()
-const handleClick=(menu)=>
-{
-	if(menu.name==='Log Out')
-	{
-		localStorage.removeItem('login')
-		
-		navigate('/')
-	
-	}
-	else{
-navigate(menu.link)
-	}
-}
-    const [open, setOpen] = useState(true);
-    const Menus = [
-			{
-				name: 'Shop by Categories',
-				link: '/home',
-				src: <ShoppingBasketIcon />,
-			},
-			{ name: 'Orders', link: '/carto', gap: true, src: <ShoppingCartIcon /> },
-			{ name: 'Log In', link: '/user', gap: true, src: <LoginIcon/> },
-			{ name: 'Sign Up', link: '/login' ,src:<WindowIcon />},
-			{ name: 'Log Out', link: '/user',src:<LogoutIcon/> },
-			{ name: 'ADDRESS', link: '/address' ,src:<CallIcon/>},
-		];
-  return (
+const Mainpage = () => {
+	const navigate = useNavigate();
+	const handleClick = (menu) => {
+		if (menu.name === 'Log Out') {
+			localStorage.removeItem('login');
+			localStorage.removeItem('login2')
+			navigate('/');
+		} else {
+			navigate(menu.link);
+		}
+	};
+	const [open, setOpen] = useState(true);
+	const Menus = [
+		{
+			name: 'Shop by Categories',
+			link: '/home',
+			src: <ShoppingBasketIcon />,
+		},
+		{ name: 'Orders', link: '/carto', gap: true, src: <ShoppingCartIcon /> },
+		{ name: 'Log In', link: '/user', gap: true, src: <LoginIcon /> },
+		{ name: 'Sign Up', link: '/login', src: <WindowIcon /> },
+		{ name: 'Log Out', link: '/user', src: <LogoutIcon /> },
+		{ name: 'ADDRESS', link: '/address', src: <CallIcon /> },
+	];
+	return (
 		<>
 			<Navbar />
 			<div className="flex">
-			
 				<div
 					className={`${
 						open ? 'w-72' : 'w-20'
@@ -60,7 +52,6 @@ navigate(menu.link)
 							onClick={() => setOpen(!open)}
 						/>
 						<br />
-
 						<div className="items-center ">
 							<img
 								src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQToInL47w88tsNFOBiRZLf1ydUfRQYtMXoMw&usqp=CAU"
@@ -82,13 +73,10 @@ navigate(menu.link)
 											menu.gap ? 'mt-11' : 'mt-6'
 										} `}
 									>
-										<span className={`${!open && 'ml-14'}`}>
-											{menu.src}
-										</span>
-										<span onClick={()=>handleClick(menu)}
-											className={`${
-												!open && 'hidden'
-											} col-span-2 text-left`}
+										<span className={`${!open && 'ml-14'}`}>{menu.src}</span>
+										<span
+											onClick={() => handleClick(menu)}
+											className={`${!open && 'hidden'} col-span-2 text-left`}
 										>
 											{menu.name}
 										</span>
@@ -98,13 +86,12 @@ navigate(menu.link)
 						</ul>
 					</div>
 				</div>
-
 				<div className="lg:ml-64 lg:w-fit md:w-fit sm:w-fit w-fit  h-screen">
-					<Images/>
+					<Images />
 				</div>
 			</div>
 		</>
 	);
-}
+};
 
-export default Mainpage
+export default Mainpage;

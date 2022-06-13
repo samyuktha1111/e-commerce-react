@@ -16,29 +16,24 @@ const mapStateToProps = (state) => {
 		cartTotal: state.carttotal,
 	};
 };
-const Cart = (props) => {
-	
-	
+const Cart = ({items,subtotal,discountTotal,cartTotal}) => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const checkOutHandler = () => {
 		navigate('/price');
-		
-	
 	};
-	console.log('items', props.items);
+	console.log('items', items);
 	useEffect(() => {
 		dispatch({ type: SUBTOTAL });
 		dispatch({ type: DISCOUNT_TOTAL });
 	});
 	const cartHandler = () => {
 		dispatch({ type: EMPTY_CART });
-		
 	};
 
 	return (
 		<>
-			{props.items.length > 0 && (
+			{items.length > 0 && (
 				<>
 					<div className="bg-gray-200 w-screen grid grid-cols-6 gap-4">
 						<div className="col-start-2 col-span-4 ">
@@ -49,7 +44,7 @@ const Cart = (props) => {
 						<div>
 							<ShoppingCartIcon className="w-max  col-start-5 col-end-6 mt-8" />
 							<span className="rounded-full py-1 px-2 bg-red-400">
-								{props.cartTotal}
+								{cartTotal}
 							</span>
 						</div>
 					</div>
@@ -63,15 +58,15 @@ const Cart = (props) => {
 			)}
 			<div className=" grid grid-flow-row gap-2 max-w-sm h-1 ">
 				<CartDetails />
-				{props.items.length > 0 && (
+				{items.length > 0 && (
 					<>
 						<div className="grid grid-rows-2 gap-3 mt-6">
 							<div className="grid grid-cols-8">
 								<div className="text-xl col-start-7 col-span-2">
-									Cart Total: {props.subtotal}
+									Cart Total: {subtotal}
 								</div>
 								<div className="text-md text-green-500 col-start-7 col-span-2">
-									Discount: {props.discountTotal}
+									Discount: {discountTotal}
 								</div>
 							</div>
 							<div className="grid grid-cols-8 gap-2">

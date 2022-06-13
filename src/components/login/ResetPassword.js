@@ -6,18 +6,17 @@ import { eye } from 'react-icons-kit/feather/eye';
 import { useNavigate } from 'react-router';
 
 const ResetPassword = () => {
-    console.log(JSON.parse(localStorage.getItem('users')))
+	console.log(JSON.parse(localStorage.getItem('users')));
 	const navigate = useNavigate();
-const[display,setDisplay]=useState(false)
-	const initialValues = {email: '', password: '' ,password1:''};
+	const [display, setDisplay] = useState(false);
+	const initialValues = { email: '', password: '', password1: '' };
 	const [formValues, setFormValues] = useState(initialValues);
 	const [formErrors, setFormErrors] = useState({});
 	const [isSubmit, setIsSubmit] = useState(false);
 	const [type, setType] = useState('password');
 
-
-const users1 = JSON.parse(localStorage.getItem('users2'));
-console.log("ppppp",users1)
+	const users1 = JSON.parse(localStorage.getItem('users2'));
+	console.log('ppppp', users1);
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormValues({ ...formValues, [name]: value });
@@ -32,37 +31,29 @@ console.log("ppppp",users1)
 		setFormErrors(validate(formValues));
 		setIsSubmit(true);
 	};
-	
+
 	useEffect(() => {
-		if (Object.keys(formErrors).length === 0 && isSubmit ) {
-			
-			
-if( formValues.password===formValues.password1)
-{
-   let data = users1.map((value) => {
-       
-         if (value.email === formValues.email ) {
-             
-              return {
-                   ...value,
-                  
-                   password: formValues.password
-              }
-         }
-         
-         return value;
-    })
-	
-    localStorage.setItem('users2', JSON.stringify(data));
-	navigate('/user')
-}
-else{
-	setDisplay(true)
-}
-	
+		if (Object.keys(formErrors).length === 0 && isSubmit) {
+			if (formValues.password === formValues.password1) {
+				let data = users1.map((value) => {
+					if (value.email === formValues.email) {
+						return {
+							...value,
+
+							password: formValues.password,
+						};
+					}
+
+					return value;
+				});
+
+				localStorage.setItem('users2', JSON.stringify(data));
+				navigate('/user');
+			} else {
+				setDisplay(true);
+			}
 		}
-	
-		
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [formErrors]);
 	const validate = (values) => {
@@ -74,25 +65,24 @@ else{
 		const passwordvalidation =
 			// eslint-disable-next-line no-useless-escape
 			/^(?=.*[a-z])(?=.[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})/i;
-const passwordvalidation1 =
-	// eslint-disable-next-line no-useless-escape
-	/^(?=.*[a-z])(?=.[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})/i;
-			if (!values.email) {
-				errors.email = '!email is required';
-			} else if (!emailvalidation.test(values.email)) {
-				errors.email = '!The email is not valid';
-			}
+		const passwordvalidation1 =
+			// eslint-disable-next-line no-useless-escape
+			/^(?=.*[a-z])(?=.[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})/i;
+		if (!values.email) {
+			errors.email = '!email is required';
+		} else if (!emailvalidation.test(values.email)) {
+			errors.email = '!The email is not valid';
+		}
 		if (!values.password) {
 			errors.password = '!password is required';
 		} else if (!passwordvalidation.test(values.password)) {
-			errors.password =
-				'!Not strong enough';
+			errors.password = '!Not strong enough';
 		}
-	if (!values.password1) {
-		errors.password1 = '!password is required';
-	} else if (!passwordvalidation1.test(values.password1)) {
-		errors.password1 = '!Not strong enough';
-	}
+		if (!values.password1) {
+			errors.password1 = '!password is required';
+		} else if (!passwordvalidation1.test(values.password1)) {
+			errors.password1 = '!Not strong enough';
+		}
 		return errors;
 	};
 

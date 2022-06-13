@@ -5,8 +5,6 @@ import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye';
 import { useNavigate } from 'react-router';
 
-
-
 const Signup = () => {
 	const navigate = useNavigate();
 	const initialValues = {
@@ -21,8 +19,8 @@ const Signup = () => {
 	const [isSubmit, setIsSubmit] = useState(false);
 	const [type, setType] = useState('password');
 	const users = JSON.parse(localStorage.getItem('users2')) || [];
-const user = JSON.parse(localStorage.getItem('login')); 
-	
+	const user = JSON.parse(localStorage.getItem('login'));
+
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormValues({ ...formValues, [name]: value });
@@ -50,10 +48,10 @@ const user = JSON.parse(localStorage.getItem('login'));
 			});
 			if (!alreadypresent) {
 				users.push(formValues);
-			
+
 				console.log(users);
 				localStorage.setItem('users2', JSON.stringify(users));
-				
+
 				navigate('/user');
 			} else {
 				setDisplay(true);
@@ -90,7 +88,7 @@ const user = JSON.parse(localStorage.getItem('login'));
 		} else if (!passwordvalidation.test(values.password)) {
 			errors.password =
 				//'!The password must have min 1 uppercase,1 lowercase,1 numeric char,1 special char,must be 8 char or longer';
-				'!Not strong enough'
+				'!Not strong enough';
 		}
 
 		return errors;
@@ -167,19 +165,21 @@ const user = JSON.parse(localStorage.getItem('login'));
 						<p className="text-red-700 text-sm">{formErrors.password}</p>
 					</div>
 					<br />
-				{!user &&	<div>
-					<div className="text-gray-500 text-sm">
-						By continuing, I agree to the
-						<span className="text-pink-700">
-							Terms of Use and Privacy Policy
-						</span>
-					</div>
-					<div>
-						<button className="text-justify mt-8  h-14 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-48   mb-5 rounded">
-							SIGN UP
-						</button>
-					</div>
-					</div>}
+					{!user && (
+						<div>
+							<div className="text-gray-500 text-sm">
+								By continuing, I agree to the
+								<span className="text-pink-700">
+									Terms of Use and Privacy Policy
+								</span>
+							</div>
+							<div>
+								<button className="text-justify mt-8  h-14 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold py-2 px-48   mb-5 rounded">
+									SIGN UP
+								</button>
+							</div>
+						</div>
+					)}
 				</div>
 			</form>
 		</div>

@@ -1,26 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { useState } from 'react';
-const Sliding = ({images}) => {
-    const [index, setIndex] = useState(0);
-   let count=0;
-useEffect(()=>
-{
-       startSlider();
-},[])
-    const startSlider=()=>
-    {
-        setInterval(()=>
-        {
-            handleOnClick();
-        },3000)
-    }
-    const handleOnClick=()=>
-    {
-       count=(count+1)%images.length;
-       setIndex(count)
-    }
-  
-  return (
+const Sliding = ({ images }) => {
+	const [index, setIndex] = useState(0);
+	let count = 0;
+	useEffect(() => {
+		startSlider();
+	}, []);
+	const startSlider = () => {
+		setInterval(() => {
+			handleOnClick();
+		}, 3000);
+	};
+	const handleOnClick = () => {
+		count = (count + 1) % images.length;
+		setIndex(count);
+	};
+
+	return (
 		<div>
 			<img
 				src={images[index]}
@@ -29,6 +25,6 @@ useEffect(()=>
 			/>
 		</div>
 	);
-}
+};
 
-export default Sliding
+export default Sliding;

@@ -1,12 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Home(props) {
+const Home=() =>{
 	const navigate = useNavigate();
 
 	const shopHandler = (item) => {
-		props.category(item);
-		navigate('/product');
+		
+		navigate(`/product/${item}`);
 	};
 	return (
 		<div className=" grid grid-flow-row gap-7  lg:w-fit sm:w-fit lg:mx-auto">
@@ -18,7 +18,7 @@ function Home(props) {
 				/>
 			</div>
 			<h1 className="text-4xl  lg:mx-auto font-bold italic text-yellow-500 md:text-green-500 lg:text-black sm:text-blue-500">
-			THE BRAND
+				THE BRAND
 			</h1>
 			<p className=" px-72 text-gray-400">
 				THE BRAND Superstore currently provides 5000+ designer clothes for

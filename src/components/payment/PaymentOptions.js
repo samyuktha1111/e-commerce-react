@@ -1,33 +1,30 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UPIPayment from './UPIPayment';
-import {useSelector,useDispatch} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import {EMPTY_CART} from '../Types'
-function PaymentOptions() {
-	const dispatch=useDispatch()
+import { EMPTY_CART } from '../Types';
+const PaymentOptions=()=>{
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [open, setOpen] = useState(true);
 	const carts = JSON.parse(localStorage.getItem('carts')) || [];
 	const [scan, setScan] = useState(false);
-	const items=useSelector((state)=>state.items)
+	const items = useSelector((state) => state.items);
 	const card = () => {
 		navigate('/pay');
-	}
+	};
 	const payment = () => {
-	
-	navigate('/order') 
-	carts.push(...items);
-	console.log(carts);
-	localStorage.setItem('carts', JSON.stringify(carts));
-	dispatch({type:EMPTY_CART})
+		navigate('/order');
+		carts.push(...items);
+		console.log(carts);
+		localStorage.setItem('carts', JSON.stringify(carts));
+		dispatch({ type: EMPTY_CART });
 	};
 	const upiHandler = () => {
 		setScan(true);
-		
 	};
-
 	return (
 		<>
 			{scan && (
@@ -98,10 +95,6 @@ function PaymentOptions() {
 				</div>
 				<div className="text-justify ml-16 mt-2">
 					<input type="radio" name="pay" />
-					<label className="ml-16">Net Banking</label>
-				</div>
-				<div className="text-justify ml-16 mt-4">
-					<input type="radio" name="pay"  />
 					<label className="ml-16">Cash on Delivery</label>
 				</div>
 				<div className="text-right mr-24 mt-36">
@@ -116,5 +109,4 @@ function PaymentOptions() {
 		</>
 	);
 }
-
 export default PaymentOptions;

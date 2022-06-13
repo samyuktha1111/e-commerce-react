@@ -1,9 +1,8 @@
-import React from 'react'
-import Sliding from './Sliding'
+import React from 'react';
+import Sliding from './Sliding';
 
-const Images= () => {
-    
-  return (
+const Images = () => {
+	return (
 		<div>
 			<Sliding
 				images={[
@@ -17,6 +16,6 @@ const Images= () => {
 			/>
 		</div>
 	);
-}
+};
 
-export default Images
+export default Images;

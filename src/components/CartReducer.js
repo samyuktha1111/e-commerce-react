@@ -4,8 +4,8 @@ const initialState = {
 	subtotal: 0,
 	carttotal: 0,
 	user: null,
-    discountTotal:0,
-	notes:[]
+	discountTotal: 0,
+	notes: [],
 };
 export const CartReducer = (state = initialState, action) => {
 	// eslint-disable-next-line default-case
@@ -41,7 +41,7 @@ export const CartReducer = (state = initialState, action) => {
 					return {
 						...curElem,
 						qty: curElem.qty + 1,
-						amount: (curElem.qty + 1) * curElem.price*100,
+						amount: (curElem.qty + 1) * curElem.price * 100,
 					};
 				}
 				return curElem;
@@ -54,7 +54,7 @@ export const CartReducer = (state = initialState, action) => {
 						return {
 							...curElem,
 							qty: curElem.qty - 1,
-							amount: (curElem.qty - 1) * curElem.price*100,
+							amount: (curElem.qty - 1) * curElem.price * 100,
 						};
 					}
 					return curElem;
@@ -85,12 +85,10 @@ export const CartReducer = (state = initialState, action) => {
 		case 'EMPTY_CART_SUCCESS':
 			return { ...state, items: [] };
 
-		
-			case 'ADD_ADDRESS_SUCCESS':
-				{
-					state.notes.push(action.payload)
-					return state
-				}
+		case 'ADD_ADDRESS_SUCCESS': {
+			state.notes.push(action.payload);
+			return state;
+		}
 		default:
 			return state;
 	}

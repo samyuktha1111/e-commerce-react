@@ -1,10 +1,10 @@
 import React from 'react';
-import { useSelector,useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {EMPTY_CART} from '../Types'
-function UPIPayment({ setOpen }) {
+import { EMPTY_CART } from '../Types';
+const UPIPayment=({ setOpen })=> {
 	const navigate = useNavigate();
-	const dispatch=useDispatch()
+	const dispatch = useDispatch();
 	const carts = JSON.parse(localStorage.getItem('carts')) || [];
 	console.log('upi');
 	const subtotal = useSelector((state) => state.subtotal);
@@ -17,7 +17,7 @@ function UPIPayment({ setOpen }) {
 		carts.push(...items);
 		console.log(carts);
 		localStorage.setItem('carts', JSON.stringify(carts));
-		dispatch({type:EMPTY_CART})
+		dispatch({ type: EMPTY_CART });
 	};
 	return (
 		<div className="w-fit mx-32 h-screen text-center">

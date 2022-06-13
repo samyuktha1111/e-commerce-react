@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
 
 const CartOrders = () => {
-    const carts = JSON.parse(localStorage.getItem('carts'));
-  return (
+	const carts = JSON.parse(localStorage.getItem('carts'));
+	return (
 		<div className="grid grid-flow-row mt-11 overflow-scroll h-fit">
 			{carts.map((item, index) => (
 				<div className="grid grid-cols-5">
@@ -23,6 +23,6 @@ const CartOrders = () => {
 			))}
 		</div>
 	);
-}
+};
 
-export default CartOrders
+export default CartOrders;
