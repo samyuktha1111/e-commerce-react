@@ -7,7 +7,7 @@ import Cart from '@/products/Cart';
 import PriceDetails from '@/payment/PriceDetails';
 import store from '@/store';
 import { Provider } from 'react-redux';
-import PrivateRoute from './components/login/PrivateRoute';
+import PrivateRoute from '@/login/PrivateRoute';
 import CardPayment from '@/payment/CardPayment';
 import ResetPassword from '@/login/ResetPassword';
 import Signup from '@/login/Signup';
