@@ -83,15 +83,7 @@ const App = () => {
 						<Route exact path="/login" element={<Signup />} />
 						<Route exact path="/user" element={<Login />} />
 						<Route exact path="/" element={<Mainpage />} />
-						<Route
-							exact
-							path="/reset"
-							element={
-								<PrivateRoute>
-									<ResetPassword />
-								</PrivateRoute>
-							}
-						/>
+						<Route exact path="/reset" element={<ResetPassword />} />
 						<Route
 							exact
 							path="/carto"

@@ -1,14 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ADD_CART } from '../Types';
 const ProductDetail = ({ setOpen }) => {
-	const details = JSON.parse(localStorage.getItem('item'));
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-
-	const { image, title, description, price, discount } = details;
+	const details = JSON.parse(localStorage.getItem('item'));
 	const user = JSON.parse(localStorage.getItem('login'));
+	const { image, title, description, price, discount } = details;
 	console.log('user', user);
 	const orderHandler = (item) => {
 		if (user) {

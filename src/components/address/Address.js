@@ -1,15 +1,15 @@
 import React from 'react';
 import { useState } from 'react';
-import Notes from './Notes';
 import { useDispatch } from 'react-redux';
-import { ADD_ADDRESS } from '../Types';
 import { useNavigate } from 'react-router-dom';
+import { ADD_ADDRESS } from '../Types';
+import Notes from './Notes';
 const Address = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const user = JSON.parse(localStorage.getItem('login'));
 	const [address, setAddress] = useState('');
 	const [display, setDisplay] = useState(false);
+	const user = JSON.parse(localStorage.getItem('login'));
 	const clickHandler = () => {
 		user ? setDisplay(true) : navigate('/user');
 	};

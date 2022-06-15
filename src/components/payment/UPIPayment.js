@@ -5,10 +5,10 @@ import { EMPTY_CART } from '../Types';
 const UPIPayment=({ setOpen })=> {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const carts = JSON.parse(localStorage.getItem('carts')) || [];
-	console.log('upi');
 	const subtotal = useSelector((state) => state.subtotal);
 	const items = useSelector((state) => state.items);
+	const carts = JSON.parse(localStorage.getItem('carts')) || [];
+	console.log('upi');
 	const handleClose = () => {
 		setOpen(false);
 	};

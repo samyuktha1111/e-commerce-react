@@ -2,9 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 const Navbar = () => {
+	const navigate = useNavigate();
 	const user = JSON.parse(localStorage.getItem('login'));
 	const person = JSON.parse(localStorage.getItem('login2'));
-	const navigate = useNavigate();
 	const profileHandler = () => {
 		navigate('/profile');
 	};

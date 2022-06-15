@@ -11,16 +11,16 @@ import { useNavigate } from 'react-router-dom';
 import Images from './Images';
 const Mainpage = () => {
 	const navigate = useNavigate();
+	const [open, setOpen] = useState(true);
 	const handleClick = (menu) => {
 		if (menu.name === 'Log Out') {
 			localStorage.removeItem('login');
-			localStorage.removeItem('login2')
+			localStorage.removeItem('login2');
 			navigate('/');
 		} else {
 			navigate(menu.link);
 		}
 	};
-	const [open, setOpen] = useState(true);
 	const Menus = [
 		{
 			name: 'Shop by Categories',

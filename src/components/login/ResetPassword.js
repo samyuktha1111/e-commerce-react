@@ -1,27 +1,24 @@
 import { useState, useEffect } from 'react';
-
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye';
 import { useNavigate } from 'react-router';
 
 const ResetPassword = () => {
-	console.log(JSON.parse(localStorage.getItem('users')));
 	const navigate = useNavigate();
-	const [display, setDisplay] = useState(false);
 	const initialValues = { email: '', password: '', password1: '' };
 	const [formValues, setFormValues] = useState(initialValues);
 	const [formErrors, setFormErrors] = useState({});
 	const [isSubmit, setIsSubmit] = useState(false);
 	const [type, setType] = useState('password');
-
+	const [display, setDisplay] = useState(false);
 	const users1 = JSON.parse(localStorage.getItem('users2'));
+	console.log(JSON.parse(localStorage.getItem('users')));
 	console.log('ppppp', users1);
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormValues({ ...formValues, [name]: value });
 	};
-
 	const handleToggle = () => {
 		type === 'password' ? setType('text') : setType('password');
 	};

@@ -6,15 +6,14 @@ import { useNavigate } from 'react-router';
 
 const Login = () => {
 	const navigate = useNavigate();
-	const [display, setDisplay] = useState(false);
-	const user = JSON.parse(localStorage.getItem('login'));
-	const users = JSON.parse(localStorage.getItem('users2'));
 	const initialValues = { username: '', password: '' };
+	const [display, setDisplay] = useState(false);
 	const [formValues, setFormValues] = useState(initialValues);
 	const [formErrors, setFormErrors] = useState({});
 	const [isSubmit, setIsSubmit] = useState(false);
 	const [type, setType] = useState('password');
-
+	const user = JSON.parse(localStorage.getItem('login'));
+	const users = JSON.parse(localStorage.getItem('users2'));
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormValues({ ...formValues, [name]: value });

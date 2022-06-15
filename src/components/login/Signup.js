@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye';
@@ -20,18 +19,15 @@ const Signup = () => {
 	const [type, setType] = useState('password');
 	const users = JSON.parse(localStorage.getItem('users2')) || [];
 	const user = JSON.parse(localStorage.getItem('login'));
-
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setFormValues({ ...formValues, [name]: value });
 	};
-
 	const handleToggle = () => {
 		type === 'password' ? setType('text') : setType('password');
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
 		setFormErrors(validate(formValues));
 		setIsSubmit(true);
 	};

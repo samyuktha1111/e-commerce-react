@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router';
 const ProfileUpdate = () => {
 	const navigate = useNavigate();
 	const person = JSON.parse(localStorage.getItem('login'));
+	const users1 = JSON.parse(localStorage.getItem('users2'));
 	const initialValues = { email: '', username: '', phonenumber: '' };
 	const [formValues, setFormValues] = useState(initialValues);
 	const [formErrors, setFormErrors] = useState({});
 	const [isSubmit, setIsSubmit] = useState(false);
-	const users1 = JSON.parse(localStorage.getItem('users2'));
 	console.log('ppppp', users1);
 	const handleChange = (e) => {
 		const { name, value } = e.target;

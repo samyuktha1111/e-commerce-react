@@ -6,13 +6,13 @@ import { EMPTY_CART } from '../Types';
 const CardPayment=()=> {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
+	const subtotal = useSelector((state) => state.subtotal);
+	const discountTotal = useSelector((state) => state.discountTotal);
+	const items = useSelector((state) => state.items);
 	const initialValues = { card_number: '', cvv: '', code: '' };
 	const [forms, setForms] = useState(initialValues);
 	const [formErrors, setFormErrors] = useState({});
 	const [isSubmit, setIsSubmit] = useState(false);
-	const subtotal = useSelector((state) => state.subtotal);
-	const discountTotal = useSelector((state) => state.discountTotal);
-	const items = useSelector((state) => state.items);
 	const carts = JSON.parse(localStorage.getItem('carts')) || [];
 	const payHandler = (e) => {
 		e.preventDefault();

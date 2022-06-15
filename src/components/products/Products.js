@@ -12,11 +12,11 @@ import Button from '@material-ui/core/Button';
 import Products1 from './Products1';
 const Products = () => {
 	const dispatch = useDispatch();
-	const [search, setSearch] = useState('');
+	const navigate = useNavigate();
 	const cartTotal = useSelector((state) => state?.carttotal);
+	const [search, setSearch] = useState('');
 	const [dis, setDis] = useState(false);
 	const [open, setOpen] = useState(false);
-	const navigate = useNavigate();
 	const viewHandler = (item) => {
 		localStorage.setItem('item', JSON.stringify({ ...item, discount: 100 }));
 		setDis(true);
