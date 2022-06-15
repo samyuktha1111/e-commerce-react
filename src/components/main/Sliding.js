@@ -15,7 +15,6 @@ const Sliding = ({ images }) => {
 		count = (count + 1) % images.length;
 		setIndex(count);
 	};
-
 	return (
 		<div>
 			<img

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-
 import { Icon } from 'react-icons-kit';
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye';
@@ -10,7 +9,6 @@ const Login = () => {
 	const [display, setDisplay] = useState(false);
 	const user = JSON.parse(localStorage.getItem('login'));
 	const users = JSON.parse(localStorage.getItem('users2'));
-
 	const initialValues = { username: '', password: '' };
 	const [formValues, setFormValues] = useState(initialValues);
 	const [formErrors, setFormErrors] = useState({});
@@ -32,7 +30,6 @@ const Login = () => {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
 		setFormErrors(validate(formValues));
 		setIsSubmit(true);
 	};
@@ -58,14 +55,11 @@ const Login = () => {
 	}, [formErrors]);
 	const validate = (values) => {
 		const errors = {};
-
 		const usernamevalidation = /^[A-Za-z0-9]{4,16}$/i;
-
 		// eslint-disable-next-line no-useless-escape
 		const passwordvalidation =
 			// eslint-disable-next-line no-useless-escape
 			/^(?=.*[a-z])(?=.[A-Z])(?=.*[!@#\$%\^&\*])(?=.{8,})/i;
-
 		if (!values.username) {
 			errors.username = '!username is required';
 		} else if (!usernamevalidation.test(values.username)) {
@@ -76,7 +70,6 @@ const Login = () => {
 		} else if (!passwordvalidation.test(values.password)) {
 			errors.password = '!Not strong enough';
 		}
-
 		return errors;
 	};
 

@@ -37,7 +37,6 @@ const PriceDetails = () => {
 												Quantity-{item.qty}
 											</span>
 										</div>
-
 										<div className="mt-6 px-11 col-span-4">
 											<span className="text-red-500  text-sm font-base mb-2">
 												Rs {item.amount}

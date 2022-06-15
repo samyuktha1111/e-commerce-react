@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
-
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { SUBTOTAL, EMPTY_CART, DISCOUNT_TOTAL } from '../Types';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useNavigate } from 'react-router-dom';
 import CartDetails from './CartDetails';
-
 const mapStateToProps = (state) => {
 	console.log('state1', state);
 	return {
