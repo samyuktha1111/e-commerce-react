@@ -10,7 +10,7 @@ const ResetPassword = () => {
 	const [type, setType] = useState('password');
 	const [display, setDisplay] = useState(false);
 	const users1 = JSON.parse(localStorage.getItem('users2'));
-	console.log(JSON.parse(localStorage.getItem('users')));
+	console.log(JSON.parse(localStorage.getItem('users2')));
 	console.log('ppppp', users1);
 	const handleChange = (e) => {
 		const { name, value } = e.target;
